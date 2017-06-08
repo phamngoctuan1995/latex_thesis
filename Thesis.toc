@@ -1,8 +1,8 @@
 \contentsline {chapter}{L\IeC {\`\OHORN }I C\IeC {\h A}M \IeC {\OHORN }N}{i}{chapter*.1}
 \contentsline {chapter}{\IeC {\DJ }\IeC {\`\ECIRCUMFLEX } C\IeC {\UHORN }\IeC {\OHORN }NG CHI TI\IeC {\'\ECIRCUMFLEX }T}{ii}{chapter*.1}
-\contentsline {chapter}{M\IeC {\d U}C L\IeC {\d U}C}{iv}{chapter*.1}
-\contentsline {chapter}{DANH M\IeC {\d U}C H\IeC {\`I}NH \IeC {\h A}NH}{v}{chapter*.1}
-\contentsline {chapter}{DANH M\IeC {\d U}C B\IeC {\h A}NG}{vi}{chapter*.1}
+\contentsline {chapter}{M\IeC {\d U}C L\IeC {\d U}C}{v}{chapter*.1}
+\contentsline {chapter}{DANH M\IeC {\d U}C H\IeC {\`I}NH \IeC {\h A}NH}{vi}{chapter*.1}
+\contentsline {chapter}{DANH M\IeC {\d U}C B\IeC {\h A}NG}{vii}{chapter*.1}
 \contentsline {chapter}{\numberline {1}M\IeC {\h \ohorn } \IeC {\DJ }\IeC {\`\acircumflex }u }{1}{chapter.1}
 \contentsline {chapter}{\numberline {2}T\IeC {\h \ocircumflex }ng Quan}{2}{chapter.2}
 \contentsline {chapter}{\numberline {3}Nghi\IeC {\^e}n C\IeC {\'\uhorn }u Th\IeC {\d \uhorn }c Nghi\IeC {\d \ecircumflex }m Ho\IeC {\d \abreve }c L\IeC {\'y} Thuy\IeC {\'\ecircumflex }t}{3}{chapter.3}
