@@ -1,9 +1,72 @@
-\chapter{Tổng Quan}
+\chapter{Tín hiệu âm thanh, tiếng nói. Thư viện PyAudio}
 \ifpdf
     \graphicspath{{Chapter2/Chapter2Figs/PNG/}{Chapter2/Chapter2Figs/PDF/}{Chapter2/Chapter2Figs/}}
 \else
     \graphicspath{{Chapter2/Chapter2Figs/EPS/}{Chapter2/Chapter2Figs/}}
 \fi
+
+\section{Tổng quan về âm thanh, tiếng nói}
+Âm thanh đóng vai trò quan trọng trọng cuộc sống con người
+
+Âm thanh có thể được cảm nhận bởi con người thông qua thính giác
+
+Một trong những dạng của âm thanh là tiếng nói
+
+Tiếng nói đóng vai trò quan trọng trong hoạt động giao tiếp
+
+Giao tiếp bằng tiếng nói là hoạt động giao tiếp nhanh, phổ biến, tiện lợi nhất
+
+Âm thanh được nghiên cứu và ứng dụng trong nhiều lĩnh vực
+\section{Các khái niệm cơ bản của âm thanh, tiếng nói}
+wiki: https://en.wikipedia.org/wiki/Sound
+\section{Cách lưu trữ âm thanh trong máy tính}
+Âm thanh trong tự nhiên có dạng liên tục 
+
+Máy tính lưu trữ dạng rời rạc -> cần lấy mẫu âm thanh theo 1 tần số.
+\subsection{Các thông số của âm thanh khi lưu trữ trên máy tính}
+sample rate
+
+bitdepth
+
+chanel
+...
+\subsection{Lưu trữ không nén}
+file wav
+\subsection{Lưu trữ nén}
+file mp3
+
+\section{Ứng dụng}
+Âm thanh là công cụ tương tác giữa người sử dụng và ứng dụng.
+
+Người sử dụng sử dụng tiếng nói để ra lệnh
+
+Ứng dụng dùng tiếng nói để phản hồi
+
+\section{Thư viện PyAudio}
+\subsection{Tổng quan}
+Là thư viện viết bằng Python hỗ trợ tất cả các Hđh
+
+Hỗ trợ người dùng tương tác với âm thanh trên máy tính dễ dàng.
+
+https://people.csail.mit.edu/hubert/pyaudio/docs/
+\subsection{Chức năng}
+Thu âm từ microphone của máy tính dưới dạng dữ liệu thô
+
+Phát âm thanh ra loa của máy tính từ dữ liệu thô
+\subsection{Cài đặt}
+pip
+
+build từ source
+\subsection{Cách sử dụng}
+2 cách sử dụng: blocking, non-blocking
+
+các thông số của ứng dụng: samplerate, bitdeptg, chanel, ...
+\subsection{Các ưu, khuyết điểm}
+Ưu: hỗ trợ nhiều hđh, cài đặt đơn giản, nhẹ, dễ sử dụng.
+Nhược: ít tính năng, chưa hỗ trợ phát từ file mp3, chưa hỗ trợ thu từ nhiều micro
+\subsection{Ứng dụng}
+PyAudio được sử dụng trong module Microphone của ứng dụng. Giúp thu âm và chuyển cho các module khác để xử lý.
+
 
 
 

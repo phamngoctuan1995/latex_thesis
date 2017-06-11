@@ -1,6 +1,46 @@
-\chapter{Nghiên Cứu Thực Nghiệm Hoặc Lý Thuyết}
+\chapter{Speech to text}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
     \graphicspath{{Chapter3/Chapter3Figs/EPS/}{Chapter3/Chapter3Figs/}}
 \fi
+
+\section{Tổng quan}
+\section{Mô hình hoạt động}
+\section{Ứng dụng}
+\section{Các vấn đề cần giải quyết}
+\subsection{Dò tìm keyword}
+\subsubsection{Yêu cầu}
+Hoạt động liên tục -> nên hoạt động offline
+Xử lý nhanh từng frame của âm thanh
+Độ chính xác khá cao.
+\subsubsection{Giải pháp}
+sử dụng thư viên pocketsphinx
+\subsection{Chuyển đổi lệnh người dùng thành văn bản}
+\subsubsection{Yêu cầu}
+Chỉ hoạt động khi người dùng ra lệnh
+Độ chính xác rất cao.
+\subsubsection{Giải pháp}
+sử dụng thư viên google speech to text
+\section{Thư viện pocketsphinx}
+\subsection{Tổng quan}
+\subsection{Chức năng}
+\subsection{Cách cài đặt}
+\subsection{Cách sử dụng}
+các thông số của thư viện
+\subsection{Ưu, nhược điểm}
+Ưu: hỗ trợ offline, dò keyword
+Nhược: độ chính xác kém
+\subsection{Ứng dụng}
+Module wake up, giúp kích hoạt hệ thống khi người dùng gọi wakup word
+\section{Thư viện Google Speech To Text}
+\subsection{Tổng quan}
+\subsection{Chức năng}
+\subsection{Cách cài đặt}
+\subsection{Cách sử dụng}
+Các thông số của thư viện
+\subsection{Ưu, nhược điểm}
+Ưu: độ chính xác cao
+Nhược: yêu cầu internet, phải gửi toàn bộ file âm thanh 1 lúc, không stream được
+\subsection{Ứng dụng}
+Module TTS, giúp chuyển lệnh người dùng thành văn bản.
