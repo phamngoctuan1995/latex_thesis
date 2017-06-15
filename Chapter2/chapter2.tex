@@ -51,8 +51,6 @@ f là tần số, đơn vị là hertz (Hz)
 	\end{figure}
 \end{itemize}
 
-Hiện nay âm thanh đã được nghiên cứu và ứng dụng rộng rãi trong nhiều lĩnh vực của cuộc sống như: truyền thông, âm nhạc, chế tạo sonar,...
-
 \subsection{Tổng quan về tiếng nói}
 Trong tự nhiên, âm thanh bao gồm nhiều loại được tạo ra từ nhiều nguồn khác nhau: 
 \begin{itemize}
@@ -77,53 +75,109 @@ Trong tự nhiên, âm thanh bao gồm nhiều loại được tạo ra từ nhi
 
 Tiếng nói đóng vai trò quan trọng trong hoạt động động giao tiếp giữa con người, nó là phương tiện giao tiếp nhanh, tiện lợi và phổ biến nhất.
 
-\section{Cách lưu trữ âm thanh trong máy tính}
-Âm thanh trong tự nhiên có dạng liên tục 
+\section{Lưu trữ âm thanh trong máy tính}
+Tất cả âm thanh mà chúng ta nghe được trong tự nhiên đều tồn tại dưới dạng sóng âm, là các sóng cơ học tuần hoàn liên tục analog. Trong khi đó, máy tính xử lý và lưu trữ thông tin dưới dạng các xung điện tử rời rạc digital. Vì vậy, để có thể lưu trữ và xử lý tín hiệu âm thanh trên máy tính, ta phải mô phỏng sóng âm bằng những mẫu rời rạc. Việc mô phỏng được đặc trưng bởi các thông số:
+\begin{itemize}
+	\item \textbf{Mẫu (Sample) là gì}: là đơn vị âm thanh nhỏ nhất được lưu trong máy tính. Để có các xung điện tử rời rạc, ta cần lấy mẫu nhiều lần từ tín hiệu analog. Mỗi mẫu là giá trị biên độ của sóng âm tại thời điểm lấy mẫu.
+	\item \textbf{Tần số lấy mẫu (Sample Rate)}: là số lần lấy mẫu trên một giây, đơn vị là Hz. Tần số lấy mẫu càng cao, tín hiệu số thu được càng chính xác.
+	\item \textbf{Độ dày bit (BitDepth)}: để lưu lại dưới dạng số, mỗi mẫu được biểu diễn bằng một lượng bit dữ liệu nhất định gọi là BitDepth. BitDepth càng lớn âm thanh cáng sắc nét, trung thực.
+	\item \textbf{Kênh (Chanel)}: Bằng thuật toán, tín hiệu số có thể được chia thành nhiều kênh để khi nghe bằng hệ thống âm thanh vòm sẽ tạo ra cảm giác thật nhất.
+\end{itemize}
 
-Máy tính lưu trữ dạng rời rạc -> cần lấy mẫu âm thanh theo 1 tần số.
-\subsection{Các thông số của âm thanh khi lưu trữ trên máy tính}
-sample rate
+Một trong những phương pháp chuyển đổi tín hiệu analog sang digital phổ biến nhất hiện nay là Pulse-Code Modulation (PCM).
+Kỹ thuật PCM bao gồm 3 bước:
+\begin{itemize}
+	\item \textbf{Lấy mẫu (Sampling)}: quá trình rời rạc hoá tín hiệu analog đầu vào theo tần số lấy mẫu f. Ví dụ f = 44100 Hz, ta sẽ lấy mẫu 44100 lần trong một giây.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=1]{sampling}
+		\caption{Hình minh họa tín hiệu analog được lấy mẫu theo nhiều tần số khác nhau}
+		\label{fig:c2_sampling}
+	\end{figure}
+	\item \textbf{Lượng tử hóa (Quantization)}: tín hiệu analog sau khi được lấy mẫu thì mỗi mẫu có thể có vô số các giá trị. Thay vì sử dụng giá trị mẫu chính xác, giá trị mẫu được thay bằng giá trị gần nhất trong M giá trị cho phép. Các giá trị lượng tử được gọi là các mức lượng tử, nếu các mức lượng tử cách đều nhau gọi là lượng tử đều, ngược lại gọi là lượng tử không đều. Số mức lượng tử M phụ thuộc vào số khả năng mà BitDepth có thể biểu diễn.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=1]{quantization}
+		\caption{Hình minh họa quá trình lượng tử hóa}
+		\label{fig:c2_quantization}
+	\end{figure}
+	\item \textbf{Mã hóa (Encoding)}: Là quá trình biến đổi giá trị các mẫu sau khi lượng tử thành các từ mã dài n bit (n là BitDepth).
+\end{itemize}
 
-bitdepth
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1]{pcm}
+    \caption{Sơ đồ khối mô phỏng phương pháp PCM}
+    \label{fig:c2_pcm}
+\end{figure}
 
-chanel
-...
-\subsection{Lưu trữ không nén}
-file wav
+PCM cùng với những biến thể của nó là nền tảng cho âm thanh số. PCM sẽ sẽ hình thành một dạng sóng, sóng này ít nhiều có thể được chạy ngay bởi một bộ xử lý tín hiệu số. Trong khi hầu hết các định dạng khác khi thao tác với âm thanh thì cần thông qua các thuật toán điều khiển nên phải giải mã chúng khi sử dụng.
+
+\subsection{Lưu trữ không nén (uncompressed)}
+Các tín hiệu số thu được thông qua PCM sẽ được lưu trữ nguyên bản, không qua bất kỳ phương pháp nén hay sửa đổi.
+\begin{itemize}
+	\item \textbf{Ưu điểm}: khi lưu trữ dưới dạng không nén, tín hiệu âm thanh có thể được chạy ngay bởi một bộ xử lý tín hiệu số mà không cần thông qua các thuật toán giải mã.
+	\item \textbf{Khuyết điểm}: kích thước tập tin âm thanh sẽ rất lớn làm hao phí không gian lưu trữ và băng thông đường truyền.
+\end{itemize}
+Các định dạng âm thanh tiêu biểu cho phương pháp lưu trữ không nén là: WAV, AIFF,...
+
 \subsection{Lưu trữ nén}
-file mp3
+Các tín hiệu số thu được thông qua PCM sẽ được nén thông qua các thuật toán khác nhau.
+\begin{itemize}
+	\item \textbf{Ưu điểm}: kích thước tập tin âm thanh nhỏ. Tiết kiệm không gian lưu trữ và băng thông đường truyền.
+	\item \textbf{Khuyết điểm}: chất lượng âm thanh có thế bị giảm sút tùy vào thuật toán nén. Tập tin âm thanh muốn thao tác được phải thông qua quá trình giải mã
+\end{itemize}
+
+\subsubsection{Nén không mất mát (Lossless compression)}
+Các tín hiệu âm thanh gốc sẽ được nén mà không mất dữ liệu và đảm bảo chất lượng ban đầu sau khi giải nén.
+
+Để làm được điều này, cần nhờ đến nhiều thuật toán nén khác nhau. Tuy nhiên, ý tưởng chung của các thuật toán đều là tìm ra quy luật lặp của dữ liệu, sau đó tìm 1 cách hiển thị khác tối ưu hơn, tốn ít dữ liệu hơn. Ví dụ thay vì lưu chuỗi "aaaa bbb cccccc" ta sẽ chuyển thành chuỗi "a4 b3 c6" ít tốn dữ liệu hơn.
+
+Tập tin âm thanh được nén bằng phương pháp này sẽ có tỉ lệ nén không cao, vào khoảng 1/2 đến 1/3 dung lượng âm thanh gốc.
+
+Tiêu biểu cho phương pháp nén không mất mát là các định dạng âm thanh: FLAC, ALAC, APE,...
+
+\subsubsection{Nén có mất mát (Lossy compression)}
+Các tín hiệu âm thanh khi được nén sẽ bị loại bỏ đi các thành phần không quan trọng nhằm giảm tối đa kích thước lưu trữ. Mỗi thuật toán nén sẽ có những tiêu chí khác nhau để chọn lựa các thành phần âm thanh sẽ bị bỏ.Ví dụ, ngưỡng nghe của tai người là những âm thanh có tần số từ 14 Hz đến 20 kHz, như vậy thuật toán sẽ bỏ bớt đi các âm thanh có tần số nằm ngoài khoảng đó.
+
+Bên cạnh đó, khi giải mã tập tin âm thanh bị nén, các thuật toán sẽ tạo ra các âm thanh giả nhằm lấp vào các phần đã bị bỏ bớt đi. Hệ quả của việc này là bạn thường nghe các âm thanh méo mó. Các tập tin nhạc được nén với tỉ lệ càng cao thì sự méo tiếng càng nhiều. Bạn sẽ rất dễ dàng nhận ra sự khác biệt khi nghe hai tập tin nhạc gốc và nhạc nén bị mất mát dữ liệu.
+
+Tập tin âm thanh được nén bằng phương pháp này sẽ có tỉ lệ nén rất cao, lên đến 1/10 dung lượng âm thanh gốc.
+
+Tiêu biểu cho phương pháp nén không mất mát là các định dạng âm thanh: MP3, AAC, WMA,...
 
 \section{Ứng dụng}
-Âm thanh là công cụ tương tác giữa người sử dụng và ứng dụng.
+Hiện nay âm thanh, tiếng nói đã được nghiên cứu và ứng dụng rộng rãi trong nhiều lĩnh vực của cuộc sống như: truyền thông, âm nhạc, chế tạo sonar,...
 
-Người sử dụng sử dụng tiếng nói để ra lệnh
-
-Ứng dụng dùng tiếng nói để phản hồi
+Trong luận văn này, tiếng nói giữ vai trò quan trọng là phương tiện tương tác chính giữa người dùng và ứng dụng. Người dùng sử dụng tiếng nói để ra lệnh cho ứng dụng, và ứng dụng sử dụng tiếng nói để phản hồi kết quả cho người dùng.
 
 \section{Thư viện PyAudio}
 \subsection{Tổng quan}
-Là thư viện viết bằng Python hỗ trợ tất cả các Hđh
+PyAudio là thư viện hỗ trợ người dùng thao tác với âm thanh trên máy tính một cách dễ dàng. PyAudio được viết bằng Python, có khả năng hoạt động và cài đặt dễ dàng trên đa nền tảng: Windows, Mac OS, và Linux . Tính tới tháng 06/2017 phiên bản mới nhất của PyAudio là 0.2.11
 
-Hỗ trợ người dùng tương tác với âm thanh trên máy tính dễ dàng.
-
-https://people.csail.mit.edu/hubert/pyaudio/docs/
 \subsection{Chức năng}
-Thu âm từ microphone của máy tính dưới dạng dữ liệu thô
+PyAudio cũng cấp tính năng giúp người dùng dễ dàng thu và phát âm thanh từ dữ liệu thô dưới dạng từng sample. PyAudio có thể hoạt động ở chế độ đồng bộ (Synchronous) hoặc không đồng bộ (Asynchronous).
 
-Phát âm thanh ra loa của máy tính từ dữ liệu thô
 \subsection{Cài đặt}
-pip
+\begin{itemize}
+	\item \textbf{Windows}: python -m pip install pyaudio
+	\item \textbf{Mac OS}: brew install portaudio 
+pip install pyaudio
+	\item \textbf{Linux}: pip install pyaudio
+	\item \textbf{Build từ source}: \url{https://people.csail.mit.edu/hubert/git/pyaudio.git}
+\end{itemize}
 
-build từ source
 \subsection{Cách sử dụng}
 2 cách sử dụng: blocking, non-blocking
 
 các thông số của ứng dụng: samplerate, bitdeptg, chanel, ...
 \subsection{Các ưu, khuyết điểm}
-Ưu: hỗ trợ nhiều hđh, cài đặt đơn giản, nhẹ, dễ sử dụng.
-Nhược: ít tính năng, chưa hỗ trợ phát từ file mp3, chưa hỗ trợ thu từ nhiều micro
+\begin{itemize}
+	\item \textbf{Ưu điểm}: thư viện cài đặt đơn giản, hỗ trợ chạy trên nhiều hệ điều hành.
+	\item \textbf{Nhược điểm}: thư viện hỗ trợ ít tính năng. Không hỗ trợ thu âm đồng thời từ nhiều micro.
+\end{itemize}
 \subsection{Ứng dụng}
-PyAudio được sử dụng trong module Microphone của ứng dụng. Giúp thu âm và chuyển cho các module khác để xử lý.
+Trong luận văn này, thư viên PyAudio đảm nhận vai trò thu âm giọng nói của người dùng. Cung cấp thông tin cho các thành phần khác của hệ thống xử lý.
 
 
 
