@@ -40,7 +40,28 @@
                  hyperfigures = true,
                  ]{hyperref} 
 
+\usepackage{listings}
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+		  language=Python,
+		  aboveskip=3mm,
+		  belowskip=3mm,
+		  showstringspaces=false,
+		  columns=flexible,
+		  basicstyle={\small\ttfamily},
+		  numbers=none,
+		  numberstyle=\tiny\color{gray},
+		  keywordstyle=\color{blue},
+		  commentstyle=\color{dkgreen},
+		  stringstyle=\color{mauve},
+		  breaklines=true,
+		  breakatwhitespace=true,
+		  tabsize=3
+}
 %\usepackage{algorithm2e}
 \usepackage[chapter]{algorithm}
 \usepackage{algpseudocode}
@@ -166,21 +187,6 @@
 \include{Chapter5/chapter5}
 \include{Chapter6/chapter6}
 \include{Conclusions/conclusions}
-%\input{Introduction}
-%
-%\input{RelatedWork}
-%
-%\input{Overview}
-%
-%\input{Implementation}
-%
-%\input{Modeling}
-%
-%\input{ExperimentalResults}
-%
-%\input{ApplicationAndFutureWork}
-%
-%\input{Conclusion}
 
 \renewcommand{\bibname}{
 	\addcontentsline{toc}{chapter}{TÀI LIỆU THAM KHẢO}
@@ -191,7 +197,5 @@
 \bibliography{References/my_bib}
 
 \include{Appendix/appendix}
-
-%\input{Appendix}
 
 \end{document}

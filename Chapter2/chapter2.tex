@@ -153,7 +153,7 @@ Trong luận văn này, tiếng nói giữ vai trò quan trọng là phương ti
 
 \section{Thư viện PyAudio}
 \subsection{Tổng quan}
-PyAudio là thư viện hỗ trợ người dùng thao tác với âm thanh trên máy tính một cách dễ dàng. PyAudio được viết bằng Python, có khả năng hoạt động và cài đặt dễ dàng trên đa nền tảng: Windows, Mac OS, và Linux . Tính tới tháng 06/2017 phiên bản mới nhất của PyAudio là 0.2.11
+PyAudio là thư viện mã nguồn mở hỗ trợ người dùng thao tác với âm thanh trên máy tính một cách dễ dàng. PyAudio được viết bằng Python dựa trên thư viện PortAudio. PyAudio có khả năng hoạt động và cài đặt dễ dàng trên đa nền tảng: Windows, Mac OS, và Linux . Tính tới tháng 06/2017 phiên bản mới nhất của PyAudio là 0.2.11
 
 \subsection{Chức năng}
 PyAudio cũng cấp tính năng giúp người dùng dễ dàng thu và phát âm thanh từ dữ liệu thô dưới dạng từng sample. PyAudio có thể hoạt động ở chế độ đồng bộ (Synchronous) hoặc không đồng bộ (Asynchronous).
@@ -168,14 +168,62 @@ pip install pyaudio
 \end{itemize}
 
 \subsection{Cách sử dụng}
-2 cách sử dụng: blocking, non-blocking
+\begin{lstlisting}
+"""PyAudio Example: Play a wave file."""
+import pyaudio
+import wave
+import sys
+CHUNK = 1024
 
-các thông số của ứng dụng: samplerate, bitdeptg, chanel, ...
+if len(sys.argv) < 2:
+	print("Plays a wave file.\n\nUsage: %s filename.wav" % sys.argv[0])
+	sys.exit(-1)
+
+wf = wave.open(sys.argv[1], 'rb')
+# instantiate PyAudio (1)
+p = pyaudio.PyAudio()
+# open stream (2)
+stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                channels=wf.getnchannels(),
+                rate=wf.getframerate(),
+                output=True)
+# read data
+data = wf.readframes(CHUNK)
+
+# play stream (3)
+while len(data) > 0:
+	stream.write(data)
+	data = wf.readframes(CHUNK)
+
+# stop stream (4)
+stream.stop_stream()
+stream.close()
+# close PyAudio (5)
+p.terminate()
+\end{lstlisting}
+
+Đoạn code trên minh họa cách sử dụng thư viện PyAudio để phát âm thanh từ một file WAV. Chúng tôi sẽ dùng nó để hướng dẫn cách sử dụng đơn giản thư viện PyAudio
+\begin{itemize}
+	\item Để sử dụng thư viện PyAudio, trước hết cần khởi tạo PyAudio bằng cách sử dụng câu lệnh textbf{pyaudio.PyAudio()} (1). Câu  lệnh này sẽ khởi tạo thư viện PortAudio bên dưới.
+	\item Để có thể thu âm hoặc phát audio, ta mở các stream tương ứng bằng câu lệnh \textbf{pyaudio.PyAudio.open()} (2). Input stream để thu âm, output stream để phát audio. Một số tham số cần chú ý trong câu lệnh này:
+	\begin{itemize}
+		\item \textbf{format}: là định dạng được sử dụng khi encoding. Định dạng này phụ thuộc vào số lượng bit dùng để mã hóa một mẫu (BitDepth).
+		\item \textbf{chanels}: số lượng kênh của tập tin âm thanh cần phát hoặc số lượng kênh của âm thanh cần thu âm.
+		\item \textbf{rate}: là tần số lấy mẫu (Sample Rate)
+		\item \textbf{output}: giá trị này bằng \textbf{true} thì đây là stream output dùng để phát âm thanh.
+		\item \textbf{input}: giá trị này bằng \textbf{true} thì đây là stream input dùng để thu âm thanh.
+	\end{itemize}
+	\item Khi cần phát âm thanh, ta ghi dữ liệu âm thanh lên output stream bằng hàm \textbf{pyaudio.Stream.write()}. Khi cần thu âm thanh, ta đọc dữ liệu âm thanh thu được từ input stream thông qua hàm \textbf{pyaudio.Stream.read()} (3). Đoạn code minh họa đang chạy ở chế độ blocking, nên các hàm \textbf{pyaudio.Stream.write()} và \textbf{pyaudio.Stream.read()} sẽ block chương trình đến khi chúng thực hiện việc đọc/ghi xong.
+	\item Để tạm dừng đọc/ghi âm thanh ta dùng hàm \textbf{pyaudio.Stream.stop\_stream()}. Để kết thúc stream ta dùng hàm \textbf{pyaudio.Stream.close()} (4).
+	\item Cuối cùng để giải phóng PortAudio ta dùng hàm \textbf{pyaudio.PyAudio.terminate()} (5).
+\end{itemize}
+
 \subsection{Các ưu, khuyết điểm}
 \begin{itemize}
 	\item \textbf{Ưu điểm}: thư viện cài đặt đơn giản, hỗ trợ chạy trên nhiều hệ điều hành.
 	\item \textbf{Nhược điểm}: thư viện hỗ trợ ít tính năng. Không hỗ trợ thu âm đồng thời từ nhiều micro.
 \end{itemize}
+
 \subsection{Ứng dụng}
 Trong luận văn này, thư viên PyAudio đảm nhận vai trò thu âm giọng nói của người dùng. Cung cấp thông tin cho các thành phần khác của hệ thống xử lý.
 
