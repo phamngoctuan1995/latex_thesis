@@ -84,6 +84,14 @@
 \renewcommand\cftchappresnum{\chaptername\space}
 \setlength{\cftchapnumwidth}{2.5cm}
 \usepackage{titlesec}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+
 \titleformat{\chapter}[display]
   {\normalfont\large\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\huge}
 \linespread{1.3}

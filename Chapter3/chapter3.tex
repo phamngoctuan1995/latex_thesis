@@ -1,4 +1,4 @@
-\chapter{Speech to text}
+\chapter{Speech to Text}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
@@ -9,9 +9,26 @@
 
 \section{Tổng quan}
 
+Speech to Text, hay Speech Recognition là một lĩnh vực trong khoa học máy tính, trong đó nghiên cứu và phát triển các phương pháp và công nghệ để máy tính có thể nhận biết và chuyển đổi ngôn ngữ nói sang dạng văn bản. Speech recognition là một bài toán khó dành cho các nhà khoa học, vì tiếng nói luôn thay đổi theo thời gian và có sự khác biệt giữa tiếng nói của những người khác nhau, tốc độ nói, ngữ cảnh và môi trường khác nhau.
+
+Những hệ thống speech recognition đầu tiên trên thế giới có khả năng nhận biết rất hạn chế: số lượng từ vựng mà chúng có thể nhận biết chỉ ở mức vài chục, và chỉ có thể nhận biết chính xác nếu người dùng nói một cách rất rõ ràng. Ngày nay, với sự phát triển bùng nổ của deep learning và big data, các công nghệ speech recognition cũng đã phát triển rất nhanh về số lượng từ vựng và độ chính xác. Các hệ thống speech recognition hiện đại nhất có thể nhận biết được hàng chục nghìn, thậm chí là hàng trăm nghìn từ khác nhau, và độ lỗi khi nhận biết đã giảm đến gần mức nhận biết của con người. Ngày càng nhiều công ty công nghệ đã tham gia vào cuộc đua về speech recognition, có thể kể đến Google, Microsoft, IBM, Baidu, Apple, Amazon,...
+
 \section{Mô hình hoạt động}
 
+thống kê
+
 \section{Ứng dụng}
+
+\begin{itemize}
+    \item Chuyển hướng cuộc gọi tự động, quay số bằng giọng nói, tìm kiếm bằng giọng nói.
+    \item Dùng trong việc ra lệnh bằng giọng nói trên các máy bay quân sự.
+    \item Dùng trong các ứng dụng dạy học ngoại ngữ.
+    \item Phụ đề tự động trong các video.
+    \item Điều khiển robot bằng giọng nói.
+    \item Hỗ trợ người khuyết tật.
+    \item Phiên dịch tự động.
+    \item ...
+\end{itemize}
 
 \section{Các vấn đề cần giải quyết}
 
@@ -65,7 +82,7 @@ Pocketsphinx được đánh giá cao nhờ vào khả năng hoạt động offl
 
 các thông số của thư viện
 
-\subsection{Ưu, nhược điểm}
+\subsection{Các ưu, nhược điểm}
 
 \begin{itemize}
     \item \textbf{Ưu điểm:} Hỗ trợ xử lý offline, xử lý real-time liên tục, hỗ trợ chức năng dò tìm keyword.
@@ -80,7 +97,9 @@ Trong hệ thống trợ lý ảo của khóa luận này, pocketsphinx sẽ đ�
 
 \subsection{Tổng quan}
 
-\subsection{Chức năng}
+Google Speech Recognition là hệ thống nhận biết tiếng nói do Google nghiên cứu và phát triển. Hệ thống này đã được Google tích hợp vào trợ lý ảo Google Assistant trên các thiết bị Android và loa thông minh Google Home, và cũng đã được đưa vào ứng dụng tìm kiếm Google Search. Google cũng đã đưa ra Google Speech API cho phép các lập trình viên sử dụng hệ thống speech recognition này vào các ứng dụng của họ. Google Speech to Text là một thư viện trên Python có khả năng nhận biết tiếng nói nhờ vào việc gọi đến Google Speech API.
+
+Google Speech Recognition được đánh giá rất cao về độ chính xác của mình. Tại Google I/O 2017, Google đã công bố độ chính xác của công nghệ nhận biết tiếng nói này đã đạt độ lỗi word error rate là 4.9\%\cite{protalinski}, tức là độ chính xác lên đến hơn 95\%.
 
 \subsection{Cách cài đặt}
 
@@ -88,12 +107,13 @@ Trong hệ thống trợ lý ảo của khóa luận này, pocketsphinx sẽ đ�
 
 Các thông số của thư viện
 
-\subsection{Ưu, nhược điểm}
+\subsection{Các ưu, nhược điểm}
 
-Ưu: độ chính xác cao
-
-Nhược: yêu cầu internet, phải gửi toàn bộ file âm thanh 1 lúc, không stream được
+\begin{itemize}
+    \item \textbf{Ưu điểm:} Độ chính xác rất cao.
+    \item \textbf{Nhược điểm:} Yêu cầu internet để hoạt động, không xử lý real-time trên stream âm thanh được mà phải gửi toàn bộ file âm thanh.
+\end{itemize}
 
 \subsection{Ứng dụng}
 
-Module TTS, giúp chuyển lệnh người dùng thành văn bản.
+Trong hệ thống này, thư viện Google Speech to Text được dùng trong module SpeechToText. Module này sẽ đóng vai trò chuyển đổi những câu lệnh của người dùng từ dạng âm thanh sang dạng văn bản.
