@@ -91,14 +91,14 @@ Kỹ thuật PCM bao gồm 3 bước:
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=1]{sampling}
-		\caption{Hình minh họa tín hiệu analog được lấy mẫu theo nhiều tần số khác nhau}
+		\caption{Minh họa tín hiệu analog được lấy mẫu theo nhiều tần số khác nhau}
 		\label{fig:c2_sampling}
 	\end{figure}
 	\item \textbf{Lượng tử hóa (Quantization)}: tín hiệu analog sau khi được lấy mẫu thì mỗi mẫu có thể có vô số các giá trị. Thay vì sử dụng giá trị mẫu chính xác, giá trị mẫu được thay bằng giá trị gần nhất trong M giá trị cho phép. Các giá trị lượng tử được gọi là các mức lượng tử, nếu các mức lượng tử cách đều nhau gọi là lượng tử đều, ngược lại gọi là lượng tử không đều. Số mức lượng tử M phụ thuộc vào số khả năng mà BitDepth có thể biểu diễn.
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=1]{quantization}
-		\caption{Hình minh họa quá trình lượng tử hóa}
+		\caption{Minh họa quá trình lượng tử hóa}
 		\label{fig:c2_quantization}
 	\end{figure}
 	\item \textbf{Mã hóa (Encoding)}: Là quá trình biến đổi giá trị các mẫu sau khi lượng tử thành các từ mã dài n bit (n là BitDepth).
@@ -180,13 +180,16 @@ if len(sys.argv) < 2:
 	sys.exit(-1)
 
 wf = wave.open(sys.argv[1], 'rb')
+
 # instantiate PyAudio (1)
 p = pyaudio.PyAudio()
+
 # open stream (2)
 stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                 channels=wf.getnchannels(),
                 rate=wf.getframerate(),
                 output=True)
+
 # read data
 data = wf.readframes(CHUNK)
 
@@ -198,6 +201,7 @@ while len(data) > 0:
 # stop stream (4)
 stream.stop_stream()
 stream.close()
+
 # close PyAudio (5)
 p.terminate()
 \end{lstlisting}
