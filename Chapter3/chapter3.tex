@@ -15,7 +15,22 @@ Những hệ thống speech recognition đầu tiên trên thế giới có kh�
 
 \section{Mô hình hoạt động}
 
-thống kê
+Hiện nay có rất nhiều kỹ thuật khác nhau để phát triển speech recognition. Tuy nhiên có thể nhận thấy một điểm chung của đa phần các kỹ thuật này là các mô hình thống kê, trong đó nổi bật là Hidden Markov Model (HMM).
+
+Khi huấn luyện, các câu nói trong tập dữ liệu sẽ thường được chia thành các thành phần âm (phonemes), tín hiệu âm thành đầu vào cũng sẽ được chia thành những đoạn rất ngắn, và sử dụng HMM để tìm sự liên hệ giữa các phonemes và tín hiệu âm thanh. Khi đó, khi một đoạn âm thanh mới được đưa vào, HMM sẽ trả về những chuỗi âm có thể tương ứng với đoạn âm thanh đó. Mô hình này được gọi là acoustic model.
+
+Bên cạnh acoustic model, người ta cũng sẽ tạo ra các language model. Language model sẽ chứa một danh sách các từ (gọi là từ điển), cấu trúc âm của các từ, và có thể có thêm cấu trúc tổng quát của các câu. Language model này sẽ nhận các chuỗi âm output từ acoustic model và tìm cách ghép lại thành các từ và câu.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=1]{SRSystem}\footnotemark
+    \caption{Cấu trúc một hệ thống speech recognition đơn giản}
+    \label{fig:c3_SRSystem}
+\end{figure}
+
+\footnotetext{http://www.rfwireless-world.com/Terminology/automatic-speech-recognition-system.html}
+
+Ngoài HMM, nhiều mô hình khác cũng đã được các nhà phát triền speech recognition sử dụng để thay thế hoặc hỗ trợ cho HMM như Gaussian Mixture Model, Deep Neural Networks, Recurrent Neural Networks, Finite-State Transducers...
 
 \section{Ứng dụng}
 
@@ -74,6 +89,8 @@ Trong hệ thống trợ lý ảo này, module chuyển đổi lệnh người d
 
 Pocketsphinx là một thư viện speech recognition mã nguồn mở được phát triển bởi Viện Công nghệ Ngôn Ngữ, thuộc trường Đại học Carnegie Mellon (Mỹ). Pocketsphinx là phiên bản tối ưu của CMU Sphinx-II, cũng là một hệ thống nhận dạng tiếng nói khá nổi tiếng của ĐH Carnegie Mellon. Nhóm nghiên cứu này đã tối ưu hóa pocketsphinx rất nhiều về bộ nhớ và thuật toán, nhằm có thể tạo ra một thư viện nhận dạng tiếng nói liên tục có khả năng đưa vào các thiết bị cầm tay.
 
+Hệ thống của pocketsphinx chủ yếu dựa trên những mô hình phổ biến của speech recognition như Gaussian Mixture Model và thuật toán Viterbi trên Hidden Markov Model, kết hợp với nhiều thuật toán hỗ trợ khác\cite{huggins2006pocketsphinx}.
+
 Pocketsphinx được đánh giá cao nhờ vào khả năng hoạt động offline và tốc độ xử lý khá nhanh. Ngoài ra, pocketsphinx có khả năng xử lý real-time liên tục trên stream âm thanh (thay vì phải hoàn tất việc thu âm và xử lý trên file âm thanh thu được).
 
 \subsection{Cách cài đặt}
@@ -99,7 +116,9 @@ Trong hệ thống trợ lý ảo của khóa luận này, pocketsphinx sẽ đ�
 
 Google Speech Recognition là hệ thống nhận biết tiếng nói do Google nghiên cứu và phát triển. Hệ thống này đã được Google tích hợp vào trợ lý ảo Google Assistant trên các thiết bị Android và loa thông minh Google Home, và cũng đã được đưa vào ứng dụng tìm kiếm Google Search. Google cũng đã đưa ra Google Speech API cho phép các lập trình viên sử dụng hệ thống speech recognition này vào các ứng dụng của họ. Google Speech to Text là một thư viện trên Python có khả năng nhận biết tiếng nói nhờ vào việc gọi đến Google Speech API.
 
-Google Speech Recognition được đánh giá rất cao về độ chính xác của mình. Tại Google I/O 2017, Google đã công bố độ chính xác của công nghệ nhận biết tiếng nói này đã đạt độ lỗi word error rate là 4.9\%\cite{protalinski}, tức là độ chính xác lên đến hơn 95\%.
+Trong quá trình phát triển, các nhà nghiên cứu của Google đã sử dụng nhiều kỹ thuật khác nhau cho Google Speech Recognition, từ những kỹ thuật cổ điển như Gaussian Mixture Model, đến những kỹ thuật hiện đại hơn như Deep Neural Networks hay Long Short-term Memory Recurrent Neural Networks (LSTM RNNs)\cite{beaufays}.
+
+Nhờ sự thay đổi và tiến bộ liên tục, Google Speech Recognition được đánh giá rất cao về độ chính xác của mình. Tại Google I/O 2017, Google đã công bố độ chính xác của công nghệ nhận biết tiếng nói này đã đạt độ lỗi word error rate là 4.9\%\cite{protalinski}, tức là độ chính xác lên đến hơn 95\%.
 
 \subsection{Cách cài đặt}
 
