@@ -17,9 +17,17 @@ Những hệ thống speech recognition đầu tiên trên thế giới có kh�
 
 Hiện nay có rất nhiều kỹ thuật khác nhau để phát triển speech recognition. Tuy nhiên có thể nhận thấy một điểm chung của đa phần các kỹ thuật này là các mô hình thống kê, trong đó nổi bật là Hidden Markov Model (HMM).
 
-Khi huấn luyện, các câu nói trong tập dữ liệu sẽ thường được chia thành các thành phần âm (phonemes), tín hiệu âm thành đầu vào cũng sẽ được chia thành những đoạn rất ngắn, và sử dụng HMM để tìm sự liên hệ giữa các phonemes và tín hiệu âm thanh. Khi đó, khi một đoạn âm thanh mới được đưa vào, HMM sẽ trả về những chuỗi âm có thể tương ứng với đoạn âm thanh đó. Mô hình này được gọi là acoustic model.
+Khi huấn luyện, các câu nói trong tập dữ liệu sẽ thường được chia thành các thành phần âm (phonemes), tín hiệu âm thanh đầu vào thường sẽ được chia thành những đoạn ngắn, đưa qua các bước tiền xử lý như FFT hoặc MFCC để trích xuất đặc trưng. Hệ thống speech recognition sẽ sử dụng HMM để tìm sự liên hệ giữa các phonemes và các đặc trưng của tín hiệu âm thanh. Khi đó, khi một đoạn âm thanh mới được đưa vào, HMM sẽ trả về những chuỗi âm có thể tương ứng với đoạn âm thanh đó. Mô hình này được gọi là acoustic model.
 
-Bên cạnh acoustic model, người ta cũng sẽ tạo ra các language model. Language model sẽ chứa một danh sách các từ (gọi là từ điển), cấu trúc âm của các từ, và có thể có thêm cấu trúc tổng quát của các câu. Language model này sẽ nhận các chuỗi âm output từ acoustic model và tìm cách ghép lại thành các từ và câu.
+Bên cạnh acoustic model, người ta cũng sẽ tạo ra các language model. Language model thường sẽ gồm:
+
+\begin{itemize}
+    \item Danh sách các từ (gọi là từ điển). Hệ thống sẽ nhận biết được những từ nằm trong từ điển này.
+    \item Cấu trúc âm của các từ trong từ điển, ví dụ như từ "stuff" gồm 3 âm: "st", "uh" và "ff".
+    \item Mối quan hệ giữa các từ trong từ điển (từ nào thường đứng cạnh từ nào).
+\end{itemize}
+
+Language model sẽ nhận các chuỗi âm output từ acoustic model, tìm cách ghép các chuỗi âm này thành các chuỗi từ có trong từ điển, và tìm cách ghép các chuỗi từ này thành câu.
 
 \begin{figure}[h]
     \centering

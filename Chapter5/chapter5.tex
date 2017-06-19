@@ -1,19 +1,80 @@
-\chapter{Intent Classification}
+\chapter{Intent Classification và Entity Extraction}
 \ifpdf
     \graphicspath{{Chapter5/Chapter5Figs/PNG/}{Chapter5/Chapter5Figs/PDF/}{Chapter5/Chapter5Figs/}}
 \else
     \graphicspath{{Chapter5/Chapter5Figs/EPS/}{Chapter5/Chapter5Figs/}}
 \fi
 
+\textit{Nội dung chương 5 sẽ giới thiệu về hai bài toán Intent Classification và Entity Extraction, mô hình hoạt động và ứng dụng của chúng. Chương 5 cũng sẽ giới thiệu về chức năng, cách cài đặt, cách sử dụng của thư viện Rasa NLU, một thư viện được dùng để giải quyết hai bài toán Intent Classification và Entity Extraction.}
+
 \section{Tổng quan}
+
+Intent classification, hay intent recognition, là bài toán xác định intent (ý định) của một câu nói. Một hệ thống intent classification khi nhận vào một câu nói sẽ trả về kết quả là một lớp intent đã được định nghĩa trong hệ thống. Ví dụ: Câu nói "Good morning." có thể cho kết quả intent là "greetings". (kết quả có thể khác phụ thuộc vào việc định nghĩa các lớp intent trong hệ thống).
+
+Entity extraction, hay entity extraction, là bài toán xác định các entity (thực thể) trong một câu nói và phân lớp chúng về các loại entity đã được định nghĩa sẵn, ví dụ như tên người, tên tổ chức, địa điểm, thời gian,... Các lớp entity này cũng sẽ được định nghĩa sẵn trong hệ thống. Đa phần các hệ thống entity extraction sẽ chia câu nói thành các cụm ký tự rời nhau (cách nhau bởi khoảng trắng hoặc dấu câu), và các entity trong câu sẽ là một hoặc nhiều cụm liên tiếp nhau. Ví dụ: Câu "Jim bought 300 shares of Acme Corp. in 2006." sau khi được xử lý bởi một hệ thống entity extraction có thể sẽ cho ra kết quả như sau:
+
+[Jim]\textsubscript{Person} bought 300 shares of [Acme Corp.]\textsubscript{Organization} in [2006]\textsubscript{Time}.
+
+Trong ví dụ trên ta thấy có 3 entity được xác định trong câu nói:
+\begin{itemize}
+    \item "Jim" gồm 1 cụm ký tự, thuộc lớp Person
+    \item "Acme Corp." gồm 2 cụm ký tự, thuộc lớp Organiztion
+    \item "2006" gồm 1 cụm ký tự, thuộc lớp Time
+\end{itemize}
+
+Intent classification và entity extraction là hai bài toán đặc trưng của natural language understanding (hiểu ngôn ngữ tự nhiên). Intent classification và entity extraction thường đi cùng nhau, giúp máy tính có thể "hiểu" được những gì người dùng muốn làm thông qua câu nói, thông qua việc biến đổi ngôn ngữ nói thành dạng dữ liệu có cấu trục. Việc một câu nói dài được rút ngắn lại thành một intent và một vài entity sẽ giúp việc xử lý và phản hồi của máy diễn ra hiệu quả hơn.
+
 \section{Mô hình hoạt động}
+
 \section{Ứng dụng}
+
+Một số ứng dụng của hai bài toán intent classification và entity extraction:
+
+\begin{itemize}
+    \item Dùng trong các hệ thống trợ lý ảo, giúp trợ lý ảo hiểu được lệnh của người dùng.
+    \item Dùng để phát triển các ứng dụng trả lời câu hỏi tự động.
+    \item Dùng để phân tích hành vi người dùng thông qua các truy vấn tìm kiếm.
+\end{itemize}
+
 \section{Thư viện Rasa NLU}
+
 \subsection{Tổng quan}
-\subsection{Chức năng}
-\subsection{Mô hình hoạt động}
+
+Rasa NLU là một công cụ mã nguồn mở được phát triển trên ngôn ngữ Python bởi Rasa, một công ty của Đức chuyên làm các sản phẩm về trí tuệ nhân tạo. Rasa NLU là một thư viện hoàn toàn miễn phí, cho phép các nhà phát triển đưa hai tác vụ intent classification và entity extraction vào phần mềm của mình. Rasa NLU đã được hàng nghìn lập trình viên trên thế giới sử dụng trên các ứng dụng chatbot hoặc trợ lý ảo.
+
+Rasa NLU được xây dựng dựa trên các công cụ có sẵn khác như MITIE, spaCy và sklearn, tạo ra một API cấp cao đa nền tảng đơn giản và dễ sử dụng cho các nhà phát triển. Mặc dù được phát triển trên Python, các nhà phát triển có thể sử dụng Rasa NLU cho các dự án phần mềm trên tất cả các nền tảng khác nhau, nhờ vào việc cung cấp 2 hình thức tương tác: gọi hàm trong Python hoặc tự tạo một HTTP server chạy trên máy.
+
 \subsection{Cách cài đặt}
+
+\begin{itemize}
+    \item \textbf{Cài đặt Rasa NLU:}
+    \begin{itemize}
+        \item \textbf{Windows, Mac OS, Linux:} \lstinline[language=bash]{pip install rasa_nlu}
+        \item \textbf{Build từ source:}
+            \begin{lstlisting}[language=bash]
+                git clone git@github.com:golastmile/rasa_nlu.git
+                cd rasa_nlu
+                pip install -r requirements.txt
+                python setup.py install
+            \end{lstlisting}
+    \end{itemize}
+    
+    \item \textbf{Cài đặt backend:} Cần phải cài đặt MITIE, spaCy hoặc sklearn để làm backend cho Rasa NLU.
+    \begin{itemize}
+        \item \textbf{MITIE:} \lstinline[language=bash]{pip install git+https://github.com/mit-nlp/MITIE.git}
+        
+        Sau khi cài đặt MITIE, cần tải về MITIE models: \url{https://github.com/mit-nlp/MITIE/releases/download/v0.4/MITIE-models-v0.2.tar.bz2}. Tìm file total\_word\_feature\_extractor.dat lưu vào đâu đó và thêm dòng sau vào file config.json:
+        
+        \lstinline{'mitie_file': '/path/to/total_word_feature_extractor.dat'}
+        
+        \item \textbf{spaCy + sklearn:}
+    \end{itemize}
+\end{itemize}
+
 \subsection{Cách sử dụng}
+
 \subsection{Chuẩn bị dữ liệu}
+
 \subsection{Đánh giá model}
+
 \subsection{Ứng dụng}
