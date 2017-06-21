@@ -9,9 +9,9 @@
 
 \section{Tổng quan}
 
-Intent classification, hay intent recognition, là bài toán xác định intent (ý định) của một câu nói. Một hệ thống intent classification khi nhận vào một câu nói sẽ trả về kết quả là một lớp intent đã được định nghĩa trong hệ thống. Ví dụ: Câu nói "Good morning." có thể cho kết quả intent là "greetings". (kết quả có thể khác phụ thuộc vào việc định nghĩa các lớp intent trong hệ thống).
+Intent classification, hay intent recognition, là bài toán xác định intent (ý định) của một câu nói. Bài toán này bắt nguồn từ các hệ thống chuyển hướng cuộc gọi. Một hệ thống intent classification khi nhận vào một câu nói sẽ trả về kết quả là một lớp intent đã được định nghĩa trong hệ thống. Ví dụ: Câu nói "Good morning." có thể cho kết quả intent là "greetings". (kết quả có thể khác phụ thuộc vào việc định nghĩa các lớp intent trong hệ thống).
 
-Entity extraction, hay entity extraction, là bài toán xác định các entity (thực thể) trong một câu nói và phân lớp chúng về các loại entity đã được định nghĩa sẵn, ví dụ như tên người, tên tổ chức, địa điểm, thời gian,... Các lớp entity này cũng sẽ được định nghĩa sẵn trong hệ thống. Đa phần các hệ thống entity extraction sẽ chia câu nói thành các cụm ký tự rời nhau (cách nhau bởi khoảng trắng hoặc dấu câu), và các entity trong câu sẽ là một hoặc nhiều cụm liên tiếp nhau. Ví dụ: Câu "Jim bought 300 shares of Acme Corp. in 2006." sau khi được xử lý bởi một hệ thống entity extraction có thể sẽ cho ra kết quả như sau:
+Entity extraction, hay named-entity recognition (NER), là bài toán xác định các entity (thực thể) trong một câu nói và phân lớp chúng về các loại entity đã được định nghĩa sẵn, ví dụ như tên người, tên tổ chức, địa điểm, thời gian,... Các lớp entity này cũng sẽ được định nghĩa sẵn trong hệ thống. Đa phần các hệ thống entity extraction sẽ chia câu nói thành các cụm ký tự rời nhau (cách nhau bởi khoảng trắng hoặc dấu câu), và các entity trong câu sẽ là một hoặc nhiều cụm liên tiếp nhau. Ví dụ: Câu "Jim bought 300 shares of Acme Corp. in 2006." sau khi được xử lý bởi một hệ thống entity extraction có thể sẽ cho ra kết quả như sau:
 
 [Jim]\textsubscript{Person} bought 300 shares of [Acme Corp.]\textsubscript{Organization} in [2006]\textsubscript{Time}.
 
@@ -25,6 +25,12 @@ Trong ví dụ trên ta thấy có 3 entity được xác định trong câu nó
 Intent classification và entity extraction là hai bài toán đặc trưng của natural language understanding (hiểu ngôn ngữ tự nhiên). Intent classification và entity extraction thường đi cùng nhau, giúp máy tính có thể "hiểu" được những gì người dùng muốn làm thông qua câu nói, thông qua việc biến đổi ngôn ngữ nói thành dạng dữ liệu có cấu trục. Việc một câu nói dài được rút ngắn lại thành một intent và một vài entity sẽ giúp việc xử lý và phản hồi của máy diễn ra hiệu quả hơn.
 
 \section{Mô hình hoạt động}
+
+Hai bài toán intent classification và entity extraction thường được xử lý một cách riêng biệt. Rất nhiều công trình đã được công bố trên hai bài toán này, với những cách tiếp cận rất đa dạng và phong phú.
+
+Intent classification thường được giải quyết bằng những cách tiếp cận giống với những bài toán phân lớp cổ điển như support vector machines (SVM) và deep neural networks (DNN).
+
+Trong khi đó, entity extraction thường được đưa về bài toán gán nhãn tuần tự (sequence labeling). Có rất nhiều loại mô hình đã được áp dụng cho bài toán này như hidden Markov models (HMM), maximum entropy Markov models (MEMM), conditional random fields (CRF), hay recurrent neural networks (RNN).
 
 \section{Ứng dụng}
 
@@ -42,39 +48,223 @@ Một số ứng dụng của hai bài toán intent classification và entity ex
 
 Rasa NLU là một công cụ mã nguồn mở được phát triển trên ngôn ngữ Python bởi Rasa, một công ty của Đức chuyên làm các sản phẩm về trí tuệ nhân tạo. Rasa NLU là một thư viện hoàn toàn miễn phí, cho phép các nhà phát triển đưa hai tác vụ intent classification và entity extraction vào phần mềm của mình. Rasa NLU đã được hàng nghìn lập trình viên trên thế giới sử dụng trên các ứng dụng chatbot hoặc trợ lý ảo.
 
-Rasa NLU được xây dựng dựa trên các công cụ có sẵn khác như MITIE, spaCy và sklearn, tạo ra một API cấp cao đa nền tảng đơn giản và dễ sử dụng cho các nhà phát triển. Mặc dù được phát triển trên Python, các nhà phát triển có thể sử dụng Rasa NLU cho các dự án phần mềm trên tất cả các nền tảng khác nhau, nhờ vào việc cung cấp 2 hình thức tương tác: gọi hàm trong Python hoặc tự tạo một HTTP server chạy trên máy.
+Rasa NLU được xây dựng dựa trên các công cụ có sẵn khác như MITIE, spaCy và sklearn, tạo ra một API cấp cao đa nền tảng đơn giản và dễ sử dụng cho các nhà phát triển. Mặc dù được phát triển trên Python, các nhà phát triển có thể sử dụng Rasa NLU cho các dự án phần mềm trên tất cả các nền tảng khác nhau, nhờ vào việc cung cấp 2 hình thức tương tác: gọi hàm trong Python hoặc tự tạo một HTTP server chạy trên máy. Rasa NLU được đánh giá cao ở việc không thu phí và cho phép các nhà phát triển điều chỉnh cấu hình sao cho phù hợp nhất với dự án.
 
 \subsection{Cách cài đặt}
 
+\subsubsection{Cài đặt Rasa NLU}
+
 \begin{itemize}
-    \item \textbf{Cài đặt Rasa NLU:}
+    \item \textbf{Windows, Mac OS, Linux:} \lstinline[language=bash]{pip install rasa_nlu}
+    \item \textbf{Build từ source:}
+        \begin{lstlisting}[language=bash]
+git clone git@github.com:golastmile/rasa_nlu.git
+cd rasa_nlu
+pip install -r requirements.txt
+python setup.py install
+        \end{lstlisting}
+\end{itemize}
+
+\subsubsection{Cài đặt backend}
+
+Cần phải cài đặt MITIE, spaCy hoặc sklearn để làm backend cho Rasa NLU.
+
+\begin{itemize}
+    \item \textbf{MITIE:} \lstinline[language=bash]{pip install git+https://github.com/mit-nlp/MITIE.git}
+    
+    Sau khi cài đặt MITIE, cần tải về MITIE models: \url{https://github.com/mit-nlp/MITIE/releases/download/v0.4/MITIE-models-v0.2.tar.bz2}. Tìm file \lstinline{total_word_feature_extractor.dat} lưu vào đâu đó và thêm dòng sau vào file \lstinline{config.json}:
+    
+    \lstinline{'mitie_file': '/path/to/total_word_feature_extractor.dat'}
+    
+    \item \textbf{Kết hợp spaCy và sklearn:}
+    
+    Cài đặt spaCy: \lstinline[language=bash]{pip install -U spacy && python -m spacy download en}
+    
+    Cài đặt sklearn:
+    
     \begin{itemize}
-        \item \textbf{Windows, Mac OS, Linux:} \lstinline[language=bash]{pip install rasa_nlu}
-        \item \textbf{Build từ source:}
-            \begin{lstlisting}[language=bash]
-                git clone git@github.com:golastmile/rasa_nlu.git
-                cd rasa_nlu
-                pip install -r requirements.txt
-                python setup.py install
-            \end{lstlisting}
+        \item Cài Anaconda: \url{https://www.continuum.io/downloads}
+        \item \lstinline[language=bash]{conda install scikit-learn}
     \end{itemize}
     
-    \item \textbf{Cài đặt backend:} Cần phải cài đặt MITIE, spaCy hoặc sklearn để làm backend cho Rasa NLU.
-    \begin{itemize}
-        \item \textbf{MITIE:} \lstinline[language=bash]{pip install git+https://github.com/mit-nlp/MITIE.git}
-        
-        Sau khi cài đặt MITIE, cần tải về MITIE models: \url{https://github.com/mit-nlp/MITIE/releases/download/v0.4/MITIE-models-v0.2.tar.bz2}. Tìm file total\_word\_feature\_extractor.dat lưu vào đâu đó và thêm dòng sau vào file config.json:
-        
-        \lstinline{'mitie_file': '/path/to/total_word_feature_extractor.dat'}
-        
-        \item \textbf{spaCy + sklearn:}
-    \end{itemize}
+    \item \textbf{Kết hợp MITIE và sklearn:} Cài đặt MITIE và sklearn theo hướng dẫn ở những phần trước.
 \end{itemize}
 
 \subsection{Cách sử dụng}
 
+\subsubsection{Cấu hình Rasa NLU}
+
+Một file cấu hình đơn giản của Rasa NLU:
+
+\begin{lstlisting}[title=config.json]
+{
+  "pipeline": "mitie_sklearn",
+  "mitie_file": "/path/to/total_word_feature_extractor.dat",
+  "path": "./models",
+  "data": "data.json"
+}
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{"pipeline":} Loại backend muốn sử dụng, ví dụ ở đây sử dụng kết hợp MITIE và sklearn thì dùng \lstinline{"mitie_sklearn"}.
+    \item \textbf{"mitie\_file":} Đường dẫn đến file \lstinline{total_word_feature_extractor.dat} của MITIE models, chỉ cần dùng khi backend có sử dụng MITIE.
+    \item \textbf{"path":} Đường dẫn đến thư mục để lưu model sau khi huấn luyện.
+    \item \textbf{"data":} Đường dẫn đến file dữ liệu huấn luyện.
+\end{itemize}
+
+Xem thêm các trường khác có thể có trong file cấu hình tại: \url{https://rasa-nlu.readthedocs.io/en/latest/config.html}.
+
+\subsubsection{Huấn luyện model}
+
+Chạy lệnh sau để huấn luyện model:
+
+\lstinline[language=bash]{python -m rasa_nlu.train -c config.json}
+
+Trong đó \lstinline{config.json} là tên file cấu hình Rasa NLU.
+
+Rasa NLU sẽ hoàn tất huấn luyện sau vài phút. Sau đó, trong thư mục trong trường \lstinline{"path"} của file cấu hình sẽ xuất hiện thư mục mới có tên \lstinline{model_YYYYMMDD-HHMMSS} trong đó \lstinline{YYYYMMDD-HHMMSS} là thời điểm việc huấn luyện kết thúc.
+
+\subsubsection{Sử dụng model}
+
+Rasa NLU cho phép ta sử dụng bằng cách chạy một HTTP server hoặc thông qua các hàm trên Python.
+
+Chạy HTTP server bằng cách chạy lệnh:
+
+\lstinline[language=bash]{python -m rasa_nlu.server -c config.json --server_model_dirs=./model_YYYYMMDD-HHMMSS}
+
+Đường dẫn model là đường dẫn tương đối đối với đường dẫn trong trường \lstinline{"path"} của file cấu hình. Khi server đã chạy, ta thực hiện truy vấn bằng cách gửi một GET request đến địa chỉ \lstinline{http://localhost:5000/parse}. Ví dụ để truy vấn kết quả cho câu "what time is it in new york", ta gửi GET request đến \lstinline[language=bash]{http://localhost:5000/parse?q=what+time+is+it+in+new+york}.
+
+Để truy vấn bằng Python, ta cần tạo một đối tượng Interpreter:
+
+\begin{lstlisting}
+from rasa_nlu.model import Metadata, Interpreter
+from rasa_nlu.config import RasaNLUConfig
+
+metadata = Metadata.load("model_YYYYMMDD-HHMMSS")
+interpreter = Interpreter.load(metadata, RasaNLUConfig("config.json"))
+\end{lstlisting}
+
+Sau đó, mỗi lần truy vấn ta gọi hàm \lstinline{interpreter.parse}, ví dụ như \lstinline{interpreter.parse("what time is it in new york")}.
+
+Kết quả của truy vấn sẽ là một chuỗi JSon có cấu trúc như sau:
+
+\begin{lstlisting}
+{
+  "text": "what time is it in new york",
+  "entities": [
+    {
+      "start": 19,
+      "end": 27, 
+      "entity": "location", 
+      "extractor": "ner_mitie",  
+      "value": "new york"
+    }
+  ], 
+  "intent": {
+    "confidence": 0.77642937607205087, 
+    "name": "time.get"
+  }, 
+  "intent_ranking": [
+    {
+      "confidence": 0.77642937607205087, 
+      "name": "time.get"
+    }, 
+    {
+      "confidence": 0.0265279318597689, 
+      "name": "general_question"
+    }
+  ]
+}
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{"text":} Chuỗi câu nói input.
+    
+    \item \textbf{"entities":} Mảng chứa danh sách các entity được xác định trong câu.
+    
+    Thông tin của mỗi entity sẽ gồm \lstinline{"start"} và \lstinline{"end"} thể hiện vị trí của entity đó trong câu, \lstinline{"entity"} là tên lớp entity, \lstinline{"value"} là giá trị của entity.
+    
+    \item \textbf{"intent":} Thông tin về intent kết quả có độ tin cậy cao nhất, trong đó \lstinline{"name"} là tên lớp intent và \lstinline{"confidence"} là độ tin cậy.
+    
+    \item \textbf{"intent\_ranking":} Mảng chứa danh sách các intent có confidence cao nhất, cùng với confidence tương ứng.
+\end{itemize}
+
 \subsection{Chuẩn bị dữ liệu}
+
+Tập dữ liệu huấn luyện là một file JSon có cấu trúc như sau:
+
+\begin{lstlisting}
+{
+    "rasa_nlu_data": {
+        "common_examples": []
+    }
+}
+\end{lstlisting}
+
+Trong đó mảng \lstinline{"common_examples"} sẽ chứa tất cả các mẫu dữ liệu. Mỗi mẫu huấn luyện sẽ gồm 3 trường:
+
+\begin{itemize}
+    \item \textbf{"text":} Chuỗi chứa câu nói input.
+    
+    \item \textbf{"intent":} Chuỗi chứa tên lớp intent tương ứng của input.
+    
+    \item \textbf{"entities":} Mảng chứa danh sách các entity có trong input.
+    
+    Mỗi entity sẽ được xác định bằng các giá trị \lstinline{start} và \lstinline{end} thể hiện vị trí bắt đầu và kết thúc của entity trong chuỗi, các giá trị này được tính theo kiểu của Python. Ví dụ với chuỗi \lstinline{"what time is it in new york"} thì entity \lstinline{"new york"} sẽ có vị trí là \lstinline{start=19} và \lstinline{end=27}.
+\end{itemize}
+
+Ví dụ về một mẫu huấn luyện:
+
+\begin{lstlisting}
+{
+  "text": "what time is it in new york",
+  "intent": "time.get",
+  "entities": [
+    {
+      "start": 19,
+      "end": 27,
+      "value": "new york",
+      "entity": "location"
+    }
+  ]
+}
+\end{lstlisting}
+
+Khi chuẩn bị dữ liệu huấn luyện, ta cần xác định tất cả các intent cần thiết cho hệ thống, sau đó xác định các loại entity có thể xuất hiện trong mỗi loại intent, sau đó tìm tất cả các dạng câu có thể có của intent đó. Với mỗi loại entity ta cần tạo ra nhiều mẫu input với các giá trị khác nhau cho entity để khả năng xác định entity của model sẽ chính xác hơn.
 
 \subsection{Đánh giá model}
 
+Ta có thể đánh giá model bằng một tập dữ liệu test có cấu trúc tương tự tập dữ liệu huấn luyện, hoặc dùng chính tập dữ liệu huấn luyện để đánh giá. Dùng đoạn code sau để in ra độ chính xác của model trên tập dữ liệu test:
+
+\begin{lstlisting}
+from rasa_nlu.model import Metadata, Interpreter
+from rasa_nlu.config import RasaNLUConfig
+import json
+
+model_dir = "./models/model_YYYYMMDD-HHMMSS"
+config_dir = "config.json"
+test_data_dir = "data.json"
+
+metadata = Metadata.load(model_dir)
+interpreter = Interpreter.load(metadata, RasaNLUConfig(config_dir))
+
+data = {}
+with open(test_data_dir, "r") as f:
+    data = json.load(f)
+
+true = 0
+false = 0
+
+for dt in data['rasa_nlu_data']['common_examples']:
+    parse = interpreter.parse(dt['text'])
+    if parse['intent']['name'] == dt['intent']:
+        true += 1
+    else:
+        false += 1
+
+print true * 1.0 / (true + false)
+\end{lstlisting}
+
 \subsection{Ứng dụng}
+
+Trong hệ thống trợ lý ảo của khóa luận, Rasa NLU sẽ được sử dụng trong module IntentDetector. Module này sẽ nhận vào các câu nói của người dùng dưới dạng văn bản, và đưa ra kết quả là intent và các entity của câu nói đó. Kết quả của IntentDetector sẽ được đưa sang module IntentProcessor để xử lý và đưa ra phản hồi phù hợp.
