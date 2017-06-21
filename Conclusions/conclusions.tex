@@ -1,4 +1,3 @@
-\def\baselinestretch{1}
 \chapter{Kết Luận và Hướng Phát Triển}
 \ifpdf
     \graphicspath{{Conclusions/ConclusionsFigs/PNG/}{Conclusions/ConclusionsFigs/PDF/}{Conclusions/ConclusionsFigs/}}
@@ -6,12 +5,49 @@
     \graphicspath{{Conclusions/ConclusionsFigs/EPS/}{Conclusions/ConclusionsFigs/}}
 \fi
 
-\def\baselinestretch{1.66}
+\textit{Nội dung chương 6 sẽ tổng hợp lại các kết quả đạt được về mặt lý thuyết và thực nghiệm của khóa luận, đồng thời nêu ra những điểm còn hạn chế và hướng phát triển của đề tài.}
 
 \section{Kết quả đạt được}
+
 \subsection{Về mặt lý thuyết}
+
+\begin{itemize}
+    \item Tìm hiểu được cấu trúc cơ bản của một ứng dụng trợ lý ảo.
+    \item Tìm hiểu về âm thanh và giọng nói trên máy tính, cách sử dụng thư viện PyAudio để xử lý các tác vụ về âm thanh.
+    \item Tìm hiểu cách sử dụng và ưu nhược điểm của các thư viện nhận biết tiếng nói là pocketsphinx và Google Speech to text.
+    \item Tìm hiểu các API Text to speech như gTTS và iSpeech.
+    \item Tìm hiểu về công cụ Rasa NLU dùng trong bài toán natural language understanding.
+    \item Tìm hiểu cách sử dụng các API như Google Maps API, Apixu, Zing MP3 API, WolframAlpha API,...
+\end{itemize}
+
 \subsection{Về mặt thực nghiệm}
+
+\begin{itemize}
+    \item Xây dựng thành công ứng dụng trợ lý ảo Alexa với các chức năng cơ bản:
+    \begin{itemize}
+        \item Hỏi đáp, tra cứu thông tin
+        \item Hỏi giờ, thời tiết
+        \item Phát nhạc
+        \item Trò chuyện đơn giản
+    \end{itemize}
+    \item Ứng dụng có thể chạy trên nhiều nền tảng hệ điều hành khác nhau như Windows, Mac OS, Linux.
+    \item Ứng dụng có khả năng tự kích hoạt khi người dùng gọi keyword.
+    \item Ứng dụng có khả năng nhận biết giọng nói đạt mức chính xác rất cao.
+    \item Ứng dụng có giọng nói tương đối tự nhiên, trả lời chính xác các truy vấn của người dùng.
+\end{itemize}
+
 \section{Hướng phát triển}
+
+ngôn ngữ khác
+
+Mặc dù đã căn bản thực hiện được những mục tiêu đã đề ra nhưng ứng dụng vẫn còn nhiều điểm hạn chế so với các trợ lý ảo khác. Do đó, một số hướng phát triển của đề tài sắp tới sẽ là:
+
+\begin{itemize}
+    \item Xây dựng khả năng phản hồi của ứng dụng thành một cuộc "nói chuyện" thực sự, những câu sau sẽ có sự liên kết đến những câu trước.
+    \item Tăng số lượng chức năng.
+    \item Hỗ trợ các ngôn ngữ khác tiếng Anh.
+    \item Thêm khả năng tương tác bằng hình ảnh.
+\end{itemize}
 
 %%% ----------------------------------------------------------------------
 
