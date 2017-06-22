@@ -83,12 +83,11 @@ Thư viện gTTS có chứ năng chuyển một đoạn văn bản thanh giọng
 
 \subsection{Cách cài đặt}
 \begin{itemize}
-\item Windows, Mac OS, Linux: pip install gTTS
+\item Windows, Mac OS, Linux: \lstinline[language=bash]{pip install gTTS}
 \end{itemize}
 
 \subsection{Cách sử dụng}
 Thư viện gTTS có thể được sử dụng như là một python module hoặc chạy trên command line
-You may either use gTTS as a python module or as a command-line utility
 \begin{itemize}
 \item Python Module
 \begin{lstlisting}
@@ -113,19 +112,19 @@ tts.write_to_fp(f)
 f.close()
 \end{lstlisting}
 \item Command line
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 gtts-cli.py [-h] (["text to speak"] | -f FILE) [-l LANG] [--slow] [--debug] [-o destination_file]
-# Example:
-# Read the string 'Hello' in English to hello.mp3
+$ # Example:
+$ # Read the string 'Hello' in English to hello.mp3
 $ gtts-cli "Hello" -l 'en' -o hello.mp3
 
-# Read the string 'Hello' in English (slow speed) to hello.mp3
+$ # Read the string 'Hello' in English (slow speed) to hello.mp3
 $ gtts-cli "Hello" -l 'en' -o hello.mp3 --slow
 
-# Read the contents of file 'hello.txt' in Czech to hello.mp3:
+$ # Read the contents of file 'hello.txt' in Czech to hello.mp3:
 $ gtts-cli -f hello.txt -l 'cs' -o hello.mp3
 
-# Read the string 'Hello' from stdin in English to hello.mp3
+$ # Read the string 'Hello' from stdin in English to hello.mp3
 $ echo "Hello" | gtts-cli -l 'en' -o hello.mp3 -
 \end{lstlisting}
 \end{itemize}
@@ -140,14 +139,45 @@ $ echo "Hello" | gtts-cli -l 'en' -o hello.mp3 -
 	\end{itemize}  
 \item \textbf{Khuyết điểm}
 	\begin{itemize}
-	\item Chỉ có thể xuất ra file mp3
+	\item Chỉ có thể xuất ra tập tin mp3
 	\item Không hỗ trợ stream âm thanh.
 	\end{itemize}  
 \end{itemize}
 
 \section{iSpeech}
 \subsection{Tổng quan}
+iSpeech là một dịch vụ chuyển văn bản thành tiếng nói dưới dạng giao thức GET API. iSpeech được phát triển công ty iSpeech, một công ty được thành lập năm 2007 chuyên cung cấp các giải pháp về nhận diện tiếng nói và chuyển đổi văn bản thành tiếng nói.
+iSpeech là một dịch vụ có thu phí, tuy nhiên công ty có cung cấp phiên bản demo miễn phí nhưng có nhiều giới hạn.
+
 \subsection{Chức năng}
+Chuyển đổi văn bản đầu vào thành tiếng nói dưới dạng tập tin mp3. Phiên bản demo của iSpeech giới giạn số từ tối đa trong văn bản là 36 từ.
+
 \subsection{Cách cài đặt}
+iSpeech là dịch vụ chạy hoàn toàn trên nền Web nên không cần bất cứ thao tác cài đặt nào.
+
 \subsection{Cách sử dụng}
-\subsection{Ưu, nhược điểm}
+iSpeech được sử dụng bằng cách gửi request đến server bằng liên kết có dạng
+
+\url{https://www.ispeech.org/p/generic/getaudio?action=convert&voice=usenglishfemale&speed=0&text=good+morning}
+
+Trong đó:
+\begin{itemize}
+	\item \textbf{voice}:  tham số xác định giọng người đọc. iSpeech hỗ trợ hơn 30 giọng đọc với nhiều ngôn ngữ khác nhau. Xem thêm các giọng đọc khác mà iSpeech hỗ trợ \url{http://www.ispeech.org/api/#voices-standard}.
+	\item \textbf{speed}: tốc độ đọc giá trị này nằm trong khoảng từ -20 đên 20.
+	\item \textbf{text}: là văn bản cần chuyển thành tiếng nói. Các từ tỏng văn bản được nối với nhau bởi ký từ '+'.\
+	\item Xem thêm các tham số mà iSpeech hỗ trợ \url{http://www.ispeech.org/api/#request-parameters}
+\end{itemize}
+\subsection{Ưu điểm, nhược điểm}
+\begin{itemize}
+	\item \textbf{Ưu điểm}:
+	\begin{itemize}
+		\item Giọng đọc rất giống với con người.
+		\item Hỗ trợ stream giọng đọc trực tiếp từ server.
+		\item Không cần cài đặt, dễ dàng sử dụng
+	\end{itemize}
+	\item \textbf{Nhược điểm}:
+	\begin{itemize}
+		\item Giới hạn 36 từ mỗi lần đọc.
+		\item Giá của dịch vụ quá cao.
+	\end{itemize}
+\end{itemize}
