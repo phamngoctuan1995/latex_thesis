@@ -6,23 +6,85 @@
 \fi
 
 \section{Tổng quan}
+
 \section{Mô hình hoạt động}
+
 \subsection{Các module chính}
+
 \subsubsection{Microphone}
 Chức năng:
 Các vấn đề và cách giải quyết:
+
 \subsubsection{Recorder}
+
 \subsubsection{Wakeup}
+
 \subsubsection{Text To Speech}
+
 \subsubsection{Speech to Text}
+
 \subsubsection{Intent Classification}
+
 \subsubsection{Intent Processor}
+
 \subsection{Luồng hoạt động giữa các module}
+
 \section{Các chức năng chính}
-\subsubsection{Thông báo giờ}
-Chức năng chi tiết:
-Cách thức hoạt động:
-\subsubsection{Thông báo thời tiết}
-\subsubsection{Phát nhạc}
-\subsubsection{Giao tiếp cơ bản}
-\subsubsection{Trả lời câu hỏi Wh-question}
+
+\subsection{Thông báo giờ}
+
+\subsubsection{Chức năng chi tiết:}
+
+Trợ lý ảo có thể cho người dùng biết thời gian tại địa điểm hiện tại của người dùng, hoặc tại một địa điểm bất kỳ nào đó.
+
+\subsubsection{Cách hoạt động:}
+
+\begin{itemize}
+    \item Có thể request Google Maps Time Zone API để tìm chênh lệch giờ của một địa điểm so với múi giờ UTC. Tuy nhiên, Time Zone API chỉ nhận địa điểm bằng tọa độ chứ không nhận tên địa điểm. Do đó, hệ thống sẽ phải tìm tọa độ của địa điểm đó.
+    \item Nếu trong câu hỏi của người dùng không có địa điểm thì hệ thống sẽ request đến IPInfoDB để tìm tọa độ gần đúng của máy.
+    \item Nếu trong câu hỏi có tên địa điểm thì sẽ dùng Google Maps Geocode API để tìm tọa độ của địa điểm đó.
+    \item Sau khi tìm được chênh lệch giờ so với UTC, lấy chênh lệch đó cộng với timestamp hiện tại, rồi dùng lớp \lstinline{datetime} của Python để tạo câu trả lời theo format giờ (ví dụ "It's 4:15 PM").
+\end{itemize}
+
+\subsection{Thông báo thời tiết}
+
+\subsubsection{Chức năng chi tiết:}
+
+Trợ lý ảo có thể cho người dùng biết thời tiết tại địa điểm hiện tại của người dùng, hoặc tại một địa điểm bất kỳ nào đó.
+
+\subsubsection{Cách hoạt động:}
+
+\begin{itemize}
+    \item Nếu trong câu hỏi của người dùng không có địa điểm thì hệ thống sẽ request đến IPInfoDB để tìm địa điểm hiện tại của máy.
+    \item Sau khi có tên địa điểm, request đến Apixu API để lấy thông tin thời tiết, sau đó in ra các thông tin đó theo format phù hợp.
+\end{itemize}
+
+\subsection{Phát nhạc}
+
+\subsubsection{Chức năng chi tiết:}
+
+Trợ lý ảo có khả năng phát nhạc theo yêu cầu của người dùng (tên bài, tên ca sĩ). Trong lúc phát nhạc có thể tạm dừng, dừng hẳn hoặc sang bài tiếp theo.
+
+\subsubsection{Cách hoạt động:}
+
+Sử dụng Zing MP3 API để tìm bài hát, lưu lại danh sách các bài hát tìm được và stream nhạc từ Zing MP3 về khi biết được ID bài hát.
+
+\subsection{Giao tiếp cơ bản}
+
+\subsubsection{Chức năng chi tiết:}
+
+Trợ lý ảo có thể trả lời một số câu giao tiếp đơn giản như chào, chào buổi sáng, chúc ngủ ngon, hỏi tên, tuổi,...
+
+\subsubsection{Cách hoạt động:}
+
+Trong hệ thống sẽ có danh sách một số câu trả lời cho mỗi intent, khi câu nói của người dùng được phân lớp ra intent nào thì sẽ lấy một câu trả lời ngẫu nhiên trong danh sách câu trả lời của intent đó.
+
+\subsection{Trả lời câu hỏi Wh-question}
+
+\subsubsection{Chức năng chi tiết:}
+
+Trợ lý ảo có khả năng trả lời một số câu hỏi WH-question đơn giản (what, when, who, where, which, how).
+
+\subsubsection{Cách hoạt động:}
+
+Khi nhận được câu hỏi, hệ thống sẽ dùng câu hỏi đó để request đến WolframAlpha Spoken Result API để lấy câu trả lời.
