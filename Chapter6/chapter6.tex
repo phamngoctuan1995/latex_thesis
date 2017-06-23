@@ -8,18 +8,25 @@
 \textit{Nội dung chương 6 sẽ giới thiệu về ứng dụng Alexa, mô hình hoạt động và các thành phần của hệ thống. Chương 6 cũng sẽ giới thiệu về các chức năng của ứng dụng}
 
 \section{Tổng quan}
+
 \section{Mô hình hoạt động}
 \subsection{Các module chính}
 \subsubsection{Microphone}
-Chức năng:
-Các vấn đề và cách giải quyết:
-\subsubsection{Recorder}
+\begin{itemize}
+\item \textbf{Chức năng}: Microphone đảm nhiệm chức năng thu âm thanh cho toàn bộ ứng dụng. Module này cung cấp dữ liệu âm thanh cho hai module Recorder và Wakeup xử lý.
+\item \textbf{Cài đặt}: Microphone sử dụng thư viện PyAudio để cài đặt và chạy trên một thread riêng biệt với các module khác của ứng dụng, đảm bào luôn thu được âm thanh mới nhất kể cả khi ứng dụng đang xử lý các tác vụ khác.
+\end{itemize}
 \subsubsection{Wakeup}
+Module Wakeup có chức năng dò tìm keyword (trong ứng dụng này keyword là "Alexa"). Mỗi khi người dùng gọi keyword, module wakeup sẽ phát hiện và chuyển ứng dụng sang trạng thái thu âm để ghi nhận lệnh từ phía người dùng.
+
+\subsubsection{Recorder}
+
 \subsubsection{Text To Speech}
 \subsubsection{Speech to Text}
 \subsubsection{Intent Classification}
 \subsubsection{Intent Processor}
 \subsection{Luồng hoạt động giữa các module}
+
 \section{Các chức năng chính}
 \subsubsection{Thông báo giờ}
 Chức năng chi tiết:
@@ -28,3 +35,7 @@ Cách thức hoạt động:
 \subsubsection{Phát nhạc}
 \subsubsection{Giao tiếp cơ bản}
 \subsubsection{Trả lời câu hỏi Wh-question}
+
+\section{Giao diện hoạt động của ứng dụng}
+
+%%12:40:44 22/6/2017Last Modification of contents
