@@ -340,6 +340,45 @@ class IntentDetector:
 \begin{itemize}
 \item \lstinline{parse(text)}: xác định mệnh lệnh người dùng từ đoạn văn bản \lstinline{text}.
 \end{itemize}
+
+\item \textbf{Tập dữ liệu huấn luyện}: Tập dữ liệu huấn luyện cho model Rasa NLU dùng trong hệ thống này gồm 650 mẫu dữ liệu thuộc 31 lớp intent. Có 5 lớp entity khác nhau trong tập dữ liệu.
+
+\begin{longtable}{ |l|l|l|l| }
+\caption{Danh sách các intent trong tập dữ liệu huấn luyện}\label{c6_intent_details} \\
+\hline
+\textbf{Nhóm intent} & \textbf{Intent} & \textbf{Các entity} & \textbf{Số mẫu} \\ \hline
+general\_question & general\_question & Không có & 25 \\ \hline
+\multirow{6}{*}{music} & music.play & song, artist & 17 \\ \cline{2-4}
+& music.stop & Không có & 5 \\ \cline{2-4}
+& music.pause & Không có & 4 \\ \cline{2-4}
+& music.resume & Không có & 7 \\ \cline{2-4}
+& music.forward & Không có & 7 \\ \cline{2-4}
+& music.backward & Không có & 7 \\ \hline
+\multirow{16}{*}{smalltalk} & smalltalk.agent.acquaintance & Không có & 18 \\ \cline{2-4}
+& smalltalk.agent.age & Không có & 8 \\ \cline{2-4}
+& smalltalk.agent.birth\_date & Không có & 7 \\ \cline{2-4}
+& smalltalk.agent.boss & Không có & 7 \\ \cline{2-4}
+& smalltalk.agent.hobby & Không có & 7 \\ \cline{2-4}
+& smalltalk.agent.name & Không có & 6 \\ \cline{2-4}
+& smalltalk.agent.residence & Không có & 23 \\ \cline{2-4}
+& smalltalk.appraisal.good & Không có & 119 \\ \cline{2-4}
+& smalltalk.appraisal.thank\_you & Không có & 32 \\ \cline{2-4}
+& smalltalk.appraisal.well\_done & Không có & 9 \\ \cline{2-4}
+& smalltalk.greetings.bye & Không có & 34 \\ \cline{2-4}
+& smalltalk.greetings.goodevening & Không có & 6 \\ \cline{2-4}
+& smalltalk.greetings.goodmorning & Không có & 13 \\ \cline{2-4}
+& smalltalk.greetings.goodnight & Không có & 19 \\ \cline{2-4}
+& smalltalk.greetings.hello & Không có & 18 \\ \cline{2-4}
+& smalltalk.user.will\_be\_back & Không có & 5 \\ \hline
+time & time.get & location & 91 \\ \hline
+\multirow{6}{*}{volume} & volume.check & Không có & 7 \\ \cline{2-4}
+& volume.set & number & 10 \\ \cline{2-4}
+& volume.up & number & 12 \\ \cline{2-4}
+& volume.down & number & 17 \\ \cline{2-4}
+& volume.mute & Không có & 9 \\ \cline{2-4}
+& volume.unmute & Không có & 7 \\ \hline
+weather & weather.get & Không có & 94 \\ \hline
+\end{longtable}
 \end{itemize}
 
 \subsubsection{Intent Processor}
@@ -451,15 +490,6 @@ class SmalltalkSkill:
 \end{itemize}
 
 \section{Các chức năng chính}
-\subsubsection{Thông báo giờ}
-Chức năng chi tiết:
-Cách thức hoạt động:
-\subsubsection{Thông báo thời tiết}
-\subsubsection{Phát nhạc}
-\subsubsection{Giao tiếp cơ bản}
-\subsubsection{Trả lời câu hỏi Wh-question}
-
-\section{Giao diện hoạt động của ứng dụng}
 
 \subsection{Thông báo giờ}
 
@@ -518,4 +548,6 @@ Trợ lý ảo có khả năng trả lời một số câu hỏi WH-question đ�
 \subsubsection{Cách hoạt động:}
 
 Khi nhận được câu hỏi, hệ thống sẽ dùng câu hỏi đó để request đến WolframAlpha Spoken Result API để lấy câu trả lời.
->>>>>>> 59b1430e2ac9a21791fdba3c08dd9c0d52d2a0a8
+
+\section{Giao diện hoạt động của ứng dụng}
+
