@@ -72,7 +72,7 @@ Cần phải cài đặt MITIE, spaCy hoặc sklearn để làm backend cho Rasa
 \begin{itemize}
     \item \textbf{MITIE:} \lstinline[language=bash]{pip install git+https://github.com/mit-nlp/MITIE.git}
     
-    Sau khi cài đặt MITIE, cần tải về MITIE models: \url{https://github.com/mit-nlp/MITIE/releases/download/v0.4/MITIE-models-v0.2.tar.bz2}. Tìm file \lstinline{total_word_feature_extractor.dat} lưu vào đâu đó và thêm dòng sau vào file \lstinline{config.json}:
+    Sau khi cài đặt MITIE, cần tải về MITIE models: \url{https://github.com/mit-nlp/MITIE/releases/download/v0.4/MITIE-models-v0.2.tar.bz2}. Tìm file \lstinline{total_word_feature_extractor.dat} lưu vào đâu đó và thêm dòng sau vào file \lstinline{config.json} của Rasa NLU:
     
     \lstinline{'mitie_file': '/path/to/total_word_feature_extractor.dat'}
     

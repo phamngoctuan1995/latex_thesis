@@ -13,14 +13,16 @@ Trong vật lý, âm thanh được định nghĩa là các giao động cơ h�
 
 Cách đơn giản nhất để biểu diễn âm thanh là dưới dạng sóng sin với trục x là thời gian, trục y là áp xuất:
 
-\begin{center}
-$P = A\sin (2\pi ft)$
-\end{center}
+\begin{equation}
+P = A\sin (2\pi ft)
+\end{equation}
 
-Trong đó: P là áp suất, đơn vị là decibels (dB) hoặc pascals \\
-A là biên độ của sóng, đơn vị là decibels (dB) \\
-t là thời gian, đơn vị là giây (s) \\
-f là tần số, đơn vị là hertz (Hz)
+\begin{tabular}{ rl }
+Trong đó: & P là áp suất, đơn vị là decibels (dB) hoặc pascals \\
+& A là biên độ của sóng, đơn vị là decibels (dB) \\
+& t là thời gian, đơn vị là giây (s) \\
+& f là tần số, đơn vị là hertz (Hz)
+\end{tabular}
 
 \begin{figure}[h]
     \centering
@@ -81,7 +83,7 @@ Tất cả âm thanh mà chúng ta nghe được trong tự nhiên đều tồn 
 	\item \textbf{Mẫu (Sample) là gì}: là đơn vị âm thanh nhỏ nhất được lưu trong máy tính. Để có các xung điện tử rời rạc, ta cần lấy mẫu nhiều lần từ tín hiệu analog. Mỗi mẫu là giá trị biên độ của sóng âm tại thời điểm lấy mẫu.
 	\item \textbf{Tần số lấy mẫu (Sample Rate)}: là số lần lấy mẫu trên một giây, đơn vị là Hz. Tần số lấy mẫu càng cao, tín hiệu số thu được càng chính xác.
 	\item \textbf{Độ dày bit (BitDepth)}: để lưu lại dưới dạng số, mỗi mẫu được biểu diễn bằng một lượng bit dữ liệu nhất định gọi là BitDepth. BitDepth càng lớn âm thanh cáng sắc nét, trung thực.
-	\item \textbf{Kênh (Chanel)}: Bằng thuật toán, tín hiệu số có thể được chia thành nhiều kênh để khi nghe bằng hệ thống âm thanh vòm sẽ tạo ra cảm giác thật nhất.
+	\item \textbf{Kênh (Channel)}: Bằng thuật toán, tín hiệu số có thể được chia thành nhiều kênh để khi nghe bằng hệ thống âm thanh vòm sẽ tạo ra cảm giác thật nhất.
 \end{itemize}
 
 Một trong những phương pháp chuyển đổi tín hiệu analog sang digital phổ biến nhất hiện nay là Pulse-Code Modulation (PCM).
@@ -153,7 +155,7 @@ Trong luận văn này, tiếng nói giữ vai trò quan trọng là phương ti
 
 \section{Thư viện PyAudio}
 \subsection{Tổng quan}
-PyAudio là thư viện mã nguồn mở hỗ trợ người dùng thao tác với âm thanh trên máy tính một cách dễ dàng. PyAudio được viết bằng Python dựa trên thư viện PortAudio. PyAudio có khả năng hoạt động và cài đặt dễ dàng trên đa nền tảng: Windows, Mac OS, và Linux . Tính tới tháng 06/2017 phiên bản mới nhất của PyAudio là 0.2.11
+PyAudio là thư viện mã nguồn mở hỗ trợ người dùng thao tác với âm thanh trên máy tính một cách dễ dàng. PyAudio được viết bằng Python dựa trên thư viện PortAudio. PyAudio có khả năng hoạt động và cài đặt dễ dàng trên đa nền tảng: Windows, Mac OS, và Linux . Tính tới tháng 06/2017 phiên bản mới nhất của PyAudio là 0.2.11.
 
 \subsection{Chức năng}
 PyAudio cũng cấp tính năng giúp người dùng dễ dàng thu và phát âm thanh từ dữ liệu thô dưới dạng từng sample. PyAudio có thể hoạt động ở chế độ đồng bộ (Synchronous) hoặc không đồng bộ (Asynchronous).
@@ -211,7 +213,7 @@ p.terminate()
 
 Đoạn code trên minh họa cách sử dụng thư viện PyAudio để phát âm thanh từ một file WAV. Chúng tôi sẽ dùng nó để hướng dẫn cách sử dụng đơn giản thư viện PyAudio
 \begin{itemize}
-	\item Để sử dụng thư viện PyAudio, trước hết cần khởi tạo PyAudio bằng cách sử dụng câu lệnh textbf{pyaudio.PyAudio()} (1). Câu  lệnh này sẽ khởi tạo thư viện PortAudio bên dưới.
+	\item Để sử dụng thư viện PyAudio, trước hết cần khởi tạo PyAudio bằng cách sử dụng câu lệnh \textbf{pyaudio.PyAudio()} (1). Câu  lệnh này sẽ khởi tạo thư viện PortAudio bên dưới.
 	\item Để có thể thu âm hoặc phát audio, ta mở các stream tương ứng bằng câu lệnh \textbf{pyaudio.PyAudio.open()} (2). Input stream để thu âm, output stream để phát audio. Một số tham số cần chú ý trong câu lệnh này:
 	\begin{itemize}
 		\item \textbf{format}: là định dạng được sử dụng khi encoding. Định dạng này phụ thuộc vào số lượng bit dùng để mã hóa một mẫu (BitDepth).

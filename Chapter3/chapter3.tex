@@ -31,12 +31,10 @@ Language model sẽ nhận các chuỗi âm output từ acoustic model, tìm cá
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=1]{SRSystem}\footnotemark
+    \includegraphics[scale=1]{SRSystem}
     \caption{Cấu trúc một hệ thống speech recognition đơn giản}
     \label{fig:c3_SRSystem}
 \end{figure}
-
-\footnotetext{http://www.rfwireless-world.com/Terminology/automatic-speech-recognition-system.html}
 
 Ngoài HMM, nhiều mô hình khác cũng đã được các nhà phát triền speech recognition sử dụng để thay thế hoặc hỗ trợ cho HMM như Gaussian Mixture Model, Deep Neural Networks, Recurrent Neural Networks, Finite-State Transducers...
 
@@ -102,11 +100,55 @@ Hệ thống của pocketsphinx chủ yếu dựa trên những mô hình phổ 
 Pocketsphinx được đánh giá cao nhờ vào khả năng hoạt động offline và tốc độ xử lý khá nhanh. Ngoài ra, pocketsphinx có khả năng xử lý real-time liên tục trên stream âm thanh (thay vì phải hoàn tất việc thu âm và xử lý trên file âm thanh thu được).
 
 \subsection{Cách cài đặt}
-
+\begin{itemize}
+\item Windows, Mac OS, Linux: \lstinline[language=bash]{pip install pocketsphinx}
+\end{itemize}
 \subsection{Cách sử dụng}
+\begin{itemize}
+\item Trước hết, để khởi tạo thư viện Pocketsphinx ta cần thực hiện 3 bước:
+\begin{itemize}
+\item Bước 1: Khởi tạo đối tượng config.
+\item Bước 2: Khởi tạo các tham số cho đối tượng config. Trong đó:
+\begin{itemize}
+\item \lstinline{-hmm}: đường dẫn đến thư mục chứa Hidden Markov model của thư viện. Đối với ngôn ngữ Anh, thư mục này có tên là "en-us" và nằm tại thư mục mà thư viện được cài.
+\item \lstinline{-dict}: đường dẫn đến tập tin từ điển của thư viện. Tập tin này thường có tên là "cmudict-en-us.dict" đối với ngôn ngữ Anh.
+\item \lstinline{-keyphrase}: là keyword mà bạn muốn pocketsphinx theo dõi.
+\item \lstinline{-kws_threshold}: là ngưỡng dùng để xác định độ nhạy của pocketsphinx. Ngưỡng này càng thấp thì pocketsphinx càng nhạy, nghĩa là khả năng False Positive khi dò tìm keyword cũng sẽ tăng. Ngược lại, ngưỡng này càng cao thì pocketsphinx càng kém nhạy, khả năng bỏ lỡ keyword (False Negative) sẽ tăng lên.
+\end{itemize}
+\item Bước 3: Khởi tạo pocketsphinx bằng đối tượng config.
+\end{itemize}
 
-các thông số của thư viện
+Đoạn mã mô phỏng cách khởi tạo thư viện Pocketsphinx
+\begin{lstlisting}
+from pocketsphinx import *
 
+#step 1
+config = Decoder.default_config()
+
+#step 2
+config.set_string('-hmm', "path to hmm model")
+config.set_string('-dict', "path to dict")
+config.set_string('-keyphrase', "keyword")
+config.set_float('-kws_threshold', threshold)
+
+#step 3
+self.decoder = Decoder(config)
+\end{lstlisting}
+
+\item Sau khi khởi tạo, ta sẽ bắt đầu dò keyword bằng cách gọi hàm \lstinline{start_utt()}. Lần lượt đọc dữ liệu âm thanh input và xử lý bằng hàm \lstinline{process_raw(data)}. Ta kiểm tra kết quả trả về của hàm \lstinline{hyp()}, nếu kết quả khác \lstinline{None} nghĩa là đã dò thấy keyword.
+
+Đoạn mã mô phỏng cách sử dụng pocketsphinx để dò keyword
+\begin{lstlisting}
+self.decoder.start_utt()
+while True:
+	data = readInputData()
+	self.decoder.process_raw(data, False, False)
+			if self.decoder.hyp() != None:
+				# Keyword detected
+				self.decoder.end_utt()
+				self.decoder.start_utt()
+\end{lstlisting}
+\end{itemize}
 \subsection{Các ưu, nhược điểm}
 
 \begin{itemize}
@@ -129,10 +171,33 @@ Trong quá trình phát triển, các nhà nghiên cứu của Google đã sử 
 Nhờ sự thay đổi và tiến bộ liên tục, Google Speech Recognition được đánh giá rất cao về độ chính xác của mình. Tại Google I/O 2017, Google đã công bố độ chính xác của công nghệ nhận biết tiếng nói này đã đạt độ lỗi word error rate là 4.9\%\cite{protalinski}, tức là độ chính xác lên đến hơn 95\%.
 
 \subsection{Cách cài đặt}
+\begin{itemize}
+\item Windows, Mac OS, Linux: \lstinline[language=bash]{pip install SpeechRecognition}
+\end{itemize}
 
 \subsection{Cách sử dụng}
+\begin{itemize}
+\item Thư viện Google Speech to Text sử dụng hết sức đơn giản gồm 2 bước
+\begin{itemize}
+\item Bước 1: Import module \lstinline{speech_recognition} và lớp \lstinline{AudioData}.
+\item Bước 2: Gọi hàm \lstinline{sr.Recognizer().recognize_google} để thu được văn bản kết quả. Chú ý hàm này không thể xử lý trực tiếp với dữ liệu âm thanh thô mà phải được bao bởi lớp AudioData với các tham số:
+\begin{itemize}
+\item \lstinline{audio}: dữ liêu âm thanh thô
+\item \lstinline{sample_rate}: tần số lấy mẫu của âm thanh.
+\item \lstinline{sample_width}: số byte dùng để biểu diễn mỗi mẫu của âm thanh.
+\end{itemize}
+\end{itemize}
+\end{itemize}
 
-Các thông số của thư viện
+Đoạn mã mô phỏng cách sử dụng thư viện Google Speech to Text
+\begin{lstlisting}
+#step 1
+import speech_recognition as sr
+from speech_recognition import AudioData
+
+#step 2
+text = sr.Recognizer().recognize_google(AudioData(audio, sample_rate, sample_width))
+\end{lstlisting}
 
 \subsection{Các ưu, nhược điểm}
 
