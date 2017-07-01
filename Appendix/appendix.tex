@@ -1,0 +1,64 @@
+\newpage
+\chapter*{Phụ Lục: Một số API được dùng trong ứng dụng}
+\addcontentsline{toc}{chapter}{Phụ Lục: Một số API được dùng trong ứng dụng}
+
+\subsubsection{IPInfoDB API}
+
+IPInfoDB API được dùng để truy vấn các thông tin của máy tính như IP, địa điểm, quốc gia, thành phố,...
+
+Request có dạng \lstinline{http://api.ipinfodb.com/v3/ip-city/?key=<api_key>}, trong đó \lstinline{<api_key>} là key để sử dụng API.
+
+Kết quả trả về là một chuỗi gồm nhiều thành phần thể hiện các thông tin, được phân cách với nhau bởi các dấu chấm phẩy. Ví dụ: "OK;;14.169.250.22;VN;Viet Nam;Ho Chi Minh;Ho Chi Minh City;700000;10.75;106.667;+07:00". Trong ứng dụng Alexa, ta cần quan tâm đến các thông tin thứ 3 và 2 từ phải qua (tọa độ gần đúng của máy) và thứ 5 từ phải qua (tên thành phố).
+
+\subsubsection{Google Maps Geocode API}
+
+Google Maps Geocode API được dùng để lấy tọa độ của một địa điểm khi biết tên của địa điểm.
+
+Request có dạng \lstinline{https://maps.googleapis.com/maps/api/geocode/json?key=<api_key>&address=<address>} trong đó \lstinline{<api_key>} là key để sử dụng API, \lstinline{<address>} là tên của địa điểm cần tìm.
+
+Kết quả trả về là một chuỗi JSon có dạng:
+
+\begin{lstlisting}
+{
+  "results" : [],
+  "status" : "OK"
+}
+\end{lstlisting}
+
+Trường \lstinline{"status"} nếu khác "OK" nghĩa là truy vấn có lỗi. Trường \lstinline{"results"} là một mảng chứa các địa điểm phù hợp với địa điểm cần tìm. Mỗi địa điểm sẽ được thể hiện qua nhiều trường thông tin, trong đó có trường \lstinline{"geometry"} chứa thông tin về vị trí địa lý, trong đó ta có thể lấy trường \lstinline{"location"} (gồm 2 giá trị \lstinline{"lat"} và \lstinline{"lng"}) làm tọa độ gần đúng của địa điểm cần tìm.
+
+\subsubsection{Google Maps Time Zone API}
+
+Google Maps Time Zone API được dùng để tìm múi giờ của một địa điểm nào đó khi biết tọa độ.
+
+Request có dạng \lstinline{https://maps.googleapis.com/maps/api/timezone/json?key=<api_key>&location=<lat,lng>&timestamp=<timestamp>} trong đó \lstinline{<api_key>} là key để sử dụng API, \lstinline{<lat,lng>} là 2 số thực chỉ tọa độ cần truy vấn (cách nhau bởi dấu phẩy), \lstinline{<timestamp>} là timestamp của thời điểm cần tìm múi giờ (vì một số nơi có múi giờ khác nhau vào những thời điểm khác nhau trong năm). Trong python, ta có thể lấy timestamp của thời điểm hiện tại bằng lệnh \lstinline{int(time.time())}.
+
+Kết quả trả về là một chuỗi JSon có dạng:
+
+\begin{lstlisting}
+{
+  "dstOffset" : 0,
+  "rawOffset" : 25200,
+  "status" : "OK",
+  "timeZoneId" : "Asia/Saigon",
+  "timeZoneName" : "Indochina Time"
+}
+\end{lstlisting}
+
+Trường \lstinline{"status"} nếu khác "OK" nghĩa là truy vấn có lỗi. 2 trường \lstinline{"timeZoneId"} và \lstinline{"timeZoneName"} thể hiện thông tin tên của múi giờ, và tổng của 2 trường \lstinline{"dstOffset"} và \lstinline{"rawOffset"} sẽ cho biết chênh lệch thời gian của địa điểm cần tìm so với múi giờ UTC (tính bằng giây).
+
+\subsubsection{Apixu API}
+
+Apixu API được dùng để lấy các thông tin về thời tiết của một địa điểm.
+
+Request có dạng \lstinline{http://api.apixu.com/v1/forecast.json?key=<api_key>&q=<address>} trong đó \lstinline{<api_key>} là key để sử dụng API, \lstinline{<address>} là tên của địa điểm cần truy vấn.
+
+Kết quả trả về là một chuỗi JSon với rất nhiều thông tin, gồm cả dự báo thời tiết cho ngày và dự báo thời tiết cho các khung giờ trong ngày. Trong ứng dụng Alexa, ta sẽ quan tâm để các trường con \lstinline{"condition"} và \lstinline{"forecastday"} chứa thông tin thời tiết tại thời điểm hiện tại và dự báo trong cả ngày, có các thông tin như loại thời tiết, nhiệt độ cao nhất và thấp nhất, sức gió, lượng mưa, độ ẩm,...
+
+\subsubsection{WolframAlpha Spoken Result API}
+
+WolframAlpha Spoken Result API có khả năng trả lời các câu hỏi đơn giản với các câu trả lời là một câu nói hoàn chỉnh (chứ không phải là các thông tin rời rạc).
+
+Request có dạng \lstinline{https://api.wolframalpha.com/v1/spoken?appid=<api_key>&i=<query>} trong đó \lstinline{<api_key>} là key để sử dụng API, \lstinline{<query>} là câu hỏi.
+
+Kết quả trả về là một đoạn text đơn giản chứa câu trả lời.

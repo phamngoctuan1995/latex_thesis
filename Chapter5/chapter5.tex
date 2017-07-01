@@ -234,7 +234,15 @@ Khi chuẩn bị dữ liệu huấn luyện, ta cần xác định tất cả c�
 
 \subsection{Đánh giá model}
 
-Ta có thể đánh giá model bằng một tập dữ liệu test có cấu trúc tương tự tập dữ liệu huấn luyện, hoặc dùng chính tập dữ liệu huấn luyện để đánh giá. Dùng đoạn code sau để in ra độ chính xác của model trên tập dữ liệu test:
+Ta có thể đánh giá model bằng một tập dữ liệu test có cấu trúc tương tự tập dữ liệu huấn luyện, hoặc dùng chính tập dữ liệu huấn luyện để đánh giá.
+
+Công thức tính độ chính xác:
+
+\begin{equation}
+Acc = \frac{true}{true + false} \times 100\%
+\end{equation}
+
+Trong đó, $true$ là số câu được nhận biết đúng và $false$ là số câu được nhận biết sai. Dùng đoạn mã sau để in ra độ chính xác của model.
 
 \begin{lstlisting}
 from rasa_nlu.model import Metadata, Interpreter
@@ -262,7 +270,7 @@ for dt in data['rasa_nlu_data']['common_examples']:
     else:
         false += 1
 
-print true * 1.0 / (true + false)
+print "%.2f%%" % (true * 1.0 / (true + false) * 100.0)
 \end{lstlisting}
 
 \subsection{Ứng dụng}

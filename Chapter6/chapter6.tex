@@ -7,7 +7,7 @@
 
 \textit{Nội dung chương 6 sẽ giới thiệu về ứng dụng Alexa, mô hình hoạt động và các thành phần của hệ thống. Chương 6 cũng sẽ giới thiệu về các chức năng của ứng dụng}
 
-\section{Tổng quan}
+%\section{Tổng quan}
 
 \section{Mô hình hoạt động}
 \begin{figure}[H]
@@ -500,9 +500,9 @@ Trợ lý ảo có thể cho người dùng biết thời gian tại địa đi�
 \subsubsection{Cách hoạt động:}
 
 \begin{itemize}
-    \item Có thể request Google Maps Time Zone API để tìm chênh lệch giờ của một địa điểm so với múi giờ UTC. Tuy nhiên, Time Zone API chỉ nhận địa điểm bằng tọa độ chứ không nhận tên địa điểm. Do đó, hệ thống sẽ phải tìm tọa độ của địa điểm đó.
     \item Nếu trong câu hỏi của người dùng không có địa điểm thì hệ thống sẽ request đến IPInfoDB để tìm tọa độ gần đúng của máy.
     \item Nếu trong câu hỏi có tên địa điểm thì sẽ dùng Google Maps Geocode API để tìm tọa độ của địa điểm đó.
+    \item Sau khi có được tọa độ, ta sẽ dùng Google Maps Time Zone API để tìm chênh lệch giờ của địa điểm đó so với múi giờ UTC.
     \item Sau khi tìm được chênh lệch giờ so với UTC, lấy chênh lệch đó cộng với timestamp hiện tại, rồi dùng lớp \lstinline{datetime} của Python để tạo câu trả lời theo format giờ (ví dụ "It's 4:15 PM").
 \end{itemize}
 
